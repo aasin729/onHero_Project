@@ -37,8 +37,11 @@ const NaverMap = () => {
   }, []);
 
   return (
-    <div style={{ width: "100%", height: "500px", marginBottom: "20px" }}>
-      <div id="map" style={{ width: "100%", height: "100%" }}></div>
+    <div>
+      <h1>서울국립현충원 지도</h1>
+      <div style={{ width: "100%", height: "500px", marginBottom: "20px" }}>
+        <div id="map" style={{ width: "100%", height: "100%" }}></div>
+      </div>
     </div>
   );
 };
