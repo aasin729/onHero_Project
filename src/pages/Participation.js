@@ -1,13 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import Globe from "globe.gl";
 import * as THREE from "three";
+import ApexCharts from "react-apexcharts";
 
 const Participation = () => {
   const globeEl = useRef();
+  const totalsSectionRef = useRef();
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [isInView, setIsInView] = useState(false);
+  const [animatedValues, setAnimatedValues] = useState({
+    personnel: 0,
+    deaths: 0,
+    injuries: 0,
+    missing: 0,
+    prisoners: 0,
+  });
+  const [activeTab, setActiveTab] = useState("personnel");
 
-  // 참전국 데이터 (한국어로 변경 및 국기 이미지 URL 추가) supportType(지원구분), personnel(참전 연인원), role(참전 형태), casualties(피해 계), deaths(전사), injuries(부상), missing(실종), prisoners(포로) 추가.
-  const countries = [
+   // 참전국 데이터 (한국어로 변경 및 국기 이미지 URL 추가) supportType(지원구분), personnel(참전 연인원), role(참전 형태), casualties(피해 계), deaths(전사), injuries(부상), missing(실종), prisoners(포로) 추가.
+   const countries = [
     { country: "대한민국", lat: 37.5665, lng: 126.978, flag: "https://flagcdn.com/w320/kr.png", supportType: "전투지원", personnel: 1789000, role: "육해공군", casualties: 133996, deaths: 33686, injuries: 92134, missing: 3737, prisoners: 4439 },
     { country: "미국", lat: 38.9072, lng: -77.0369, flag: "https://flagcdn.com/w320/us.png", supportType: "전투지원", personnel: 1789000, role: "육해공군", casualties: 133996, deaths: 33686, injuries: 92134, missing: 3737, prisoners: 4439 },
     { country: "영국", lat: 51.5074, lng: -0.1278, flag: "https://flagcdn.com/w320/gb.png", supportType: "전투지원", personnel: 56000, role: "육해군", casualties: 4909, deaths: 1078, injuries: 2674, missing: 179, prisoners: 978 },
@@ -30,32 +41,140 @@ const Participation = () => {
     { country: "덴마크", lat: 56.2639, lng: 9.5018, flag: "https://flagcdn.com/w320/dk.png", supportType: "의료지원", personnel: 630, role: "병원선", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
     { country: "스웨덴", lat: 60.1282, lng: 18.6435, flag: "https://flagcdn.com/w320/se.png", supportType: "의료지원", personnel: 1124, role: "적십자병원", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 }
   ];
-  
-  // 겹치는 유럽 국가 위치 조정
-  const adjustedCountries = countries.map((country) => {
-    if (["영국", "프랑스", "벨기에", "네덜란드"].includes(country.country)) {
-      // 겹치는 국가들에 대해 조정
-      if (country.country === "영국") {
-        return { ...country, lat: country.lat + 1, lng: country.lng - 1 };
+
+    // 겹치는 유럽 국가 위치 조정
+    const adjustedCountries = countries.map((country) => {
+      if (["영국", "프랑스", "벨기에", "네덜란드"].includes(country.country)) {
+        // 겹치는 국가들에 대해 조정
+        if (country.country === "영국") {
+          return { ...country, lat: country.lat + 1, lng: country.lng - 1 };
+        }
+        if (country.country === "프랑스") {
+          return { ...country, lat: country.lat - 1, lng: country.lng + 8 };
+        }
+        if (country.country === "벨기에") {
+          return { ...country, lat: country.lat + 1, lng: country.lng + 5 };
+        }
+        if (country.country === "네덜란드") {
+          return { ...country, lat: country.lat - 4, lng: country.lng - 4 };
+        }
       }
-      if (country.country === "프랑스") {
-        return { ...country, lat: country.lat - 1, lng: country.lng + 8 };
+      return country;
+    });
+
+
+
+  const totals = countries.reduce(
+    (acc, country) => ({
+      personnel: acc.personnel + country.personnel,
+      deaths: acc.deaths + country.deaths,
+      injuries: acc.injuries + country.injuries,
+      missing: acc.missing + country.missing,
+      prisoners: acc.prisoners + country.prisoners,
+    }),
+    { personnel: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 }
+  );
+
+  const animateValue = (key, start, end, duration) => {
+    const startTime = performance.now();
+
+    const step = (currentTime) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const currentValue = Math.floor(start + (end - start) * progress);
+
+      setAnimatedValues((prev) => ({ ...prev, [key]: currentValue }));
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
       }
-      if (country.country === "벨기에") {
-        return { ...country, lat: country.lat + 1, lng: country.lng + 5 };
-      }
-      if (country.country === "네덜란드") {
-        return { ...country, lat: country.lat - 4, lng: country.lng - 4 };
-      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const getChartData = (key) => {
+    if (!totals[key] || totals[key] === 0) {
+      return [];
     }
-    return country;
+    return countries.map((country) => ({
+      x: country.country,
+      y: parseFloat(((country[key] / totals[key]) * 100).toFixed(2)) || 0,
+    }));
+  };
+
+  const chartOptions = (categories) => ({
+    chart: {
+      type: "bar",
+      toolbar: { show: false },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: "80%",
+        borderRadius: 4, // 모서리를 둥글게 설정
+        borderWidth: 2, // 바 테두리 두께 설정
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: (val, opt) => {
+        const label = categories[opt.dataPointIndex] || "알 수 없음";
+        return `${label}: ${val !== null ? val.toFixed(2) : 0}%`;
+      },
+    },
+    xaxis: {
+      categories,
+      title: { text: "비율 (%)" },
+    },
+    colors: [
+      "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+      "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+      "#aec7e8", "#ffbb78", "#98df8a", "#ff9896", "#c5b0d5",
+      "#c49c94", "#f7b6d2", "#c7c7c7", "#dbdb8d", "#9edae5"
+    ],
+    stroke: {
+      show: true,
+      width: 1, // 선 굵기 설정
+    },
   });
+  
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (totalsSectionRef.current) {
+      observer.observe(totalsSectionRef.current);
+    }
+
+    return () => {
+      if (totalsSectionRef.current) {
+        observer.unobserve(totalsSectionRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isInView) {
+      animateValue("personnel", 0, totals.personnel, 2000);
+      animateValue("deaths", 0, totals.deaths, 2000);
+      animateValue("injuries", 0, totals.injuries, 2000);
+      animateValue("missing", 0, totals.missing, 2000);
+      animateValue("prisoners", 0, totals.prisoners, 2000);
+    }
+  }, [isInView]);
 
   useEffect(() => {
     const globe = Globe()(globeEl.current)
       .globeImageUrl("//unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
       .bumpImageUrl("//unpkg.com/three-globe/example/img/earth-topology.png")
-      .customLayerData(adjustedCountries) // 조정된 데이터 적용
+      .customLayerData(adjustedCountries)
       .customThreeObject(({ flag }) => {
         const texture = new THREE.TextureLoader().load(flag);
         const material = new THREE.SpriteMaterial({ map: texture });
@@ -72,68 +191,140 @@ const Participation = () => {
       setSelectedCountry(event);
     });
 
-    globe.controls().autoRotate = true; // 자동 애니메이션  
-    globe.controls().autoRotateSpeed = 2; // 애니메이션 속도 조절
-    globe.controls().enableZoom = false; // 줌 비활성화
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = 2;
+    globe.controls().enableZoom = false;
   }, []);
 
+  const chartTitles = {
+    personnel: "참전 총인원 비율",
+    deaths: "전사 비율",
+    injuries: "부상 비율",
+    missing: "실종 비율",
+    prisoners: "포로 비율",
+  };
 
   return (
-    <div className="relative h-screen flex flex-col">
-    {/* Globe 영역 */}
-    <div ref={globeEl} className="w-full flex-1 m-auto"/>
-    {selectedCountry && (
-      <div
-        className="absolute top-1/2 right-10 bg-gray-100 p-4 rounded-lg shadow-lg w-1/4 z-10"
-        style={{
-          maxHeight: "80vh",
-          overflowY: "auto",
-          transform: "translateY(-50%)",
-        }}
-      >
-        <img
-          src={selectedCountry.flag}
-          alt={selectedCountry.country}
-          className="w-16 h-auto mx-auto mb-4"
-        />
-        <h2 className="text-xl font-bold text-center mb-2">
-          {selectedCountry.country}
-        </h2>
-        <p>지원 구분: {selectedCountry.supportType}</p>
-        <p>참전 연인원: {selectedCountry.personnel.toLocaleString()}</p>
-        <p>참전 형태: {selectedCountry.role}</p>
-        <p>피해 계: {selectedCountry.casualties.toLocaleString()}</p>
-        <p>전사: {selectedCountry.deaths.toLocaleString()}</p>
-        <p>부상: {selectedCountry.injuries.toLocaleString()}</p>
-        <p>실종: {selectedCountry.missing.toLocaleString()}</p>
-        <p>포로: {selectedCountry.prisoners.toLocaleString()}</p>
+    <div className="">
+      <div ref={globeEl} className="w-full flex-1 m-auto" />
+      {selectedCountry && (
+        <div
+          className="absolute top-1/2 right-10 bg-gray-100 p-4 rounded-lg shadow-lg w-1/4 z-10"
+          style={{
+            maxHeight: "80vh",
+            overflowY: "auto",
+            transform: "translateY(-50%)",
+          }}
+        >
+          <img
+            src={selectedCountry.flag}
+            alt={selectedCountry.country}
+            className="w-16 h-auto mx-auto mb-4"
+          />
+          <h2 className="text-xl font-bold text-center mb-2">
+            {selectedCountry.country}
+          </h2>
+          <p>지원 구분: {selectedCountry.supportType}</p>
+          <p>참전 연인원: {selectedCountry.personnel.toLocaleString()}</p>
+          <p>참전 형태: {selectedCountry.role}</p>
+          <p>피해 계: {selectedCountry.casualties.toLocaleString()}</p>
+          <p>전사: {selectedCountry.deaths.toLocaleString()}</p>
+          <p>부상: {selectedCountry.injuries.toLocaleString()}</p>
+          <p>실종: {selectedCountry.missing.toLocaleString()}</p>
+          <p>포로: {selectedCountry.prisoners.toLocaleString()}</p>
+        </div>
+      )}
+
+    <div ref={totalsSectionRef} className="w-full bg-white text-black flex flex-col items-center justify-center py-20 border-t border-gray-300">
+        <h2 className="text-3xl font-bold mb-20">UN군 총 참전 현황</h2>
+        <div className="grid grid-cols-5 gap-10 text-center">
+          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl font-semibold mb-8">참전 총인원</p>
+            <p className="text-4xl font-bold min-w-[6em] text-center">
+              {animatedValues.personnel.toLocaleString()}명
+            </p>
+          </div>
+          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl font-semibold mb-8">전사 총인원</p>
+            <p className="text-4xl font-bold min-w-[6em] text-center">
+              {animatedValues.deaths.toLocaleString()}명
+            </p>
+          </div>
+          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl font-semibold mb-8">부상 총인원</p>
+            <p className="text-4xl font-bold min-w-[6em] text-center">
+              {animatedValues.injuries.toLocaleString()}명
+            </p>
+          </div>
+          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl font-semibold mb-8">실종 총인원</p>
+            <p className="text-4xl font-bold min-w-[6em] text-center">
+              {animatedValues.missing.toLocaleString()}명
+            </p>
+          </div>
+          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl font-semibold mb-8">포로 총인원</p>
+            <p className="text-4xl font-bold min-w-[6em] text-center">
+              {animatedValues.prisoners.toLocaleString()}명
+            </p>
+          </div>
+        </div>
       </div>
-    )}
-    {/* 콘텐츠 영역 */}
-    <div
-      className="w-full bg-gray-500 text-white flex items-center justify-center z-0"
-      style={{ height: "300px" }}
-    >
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">추가 콘텐츠 영역</h2>
-        <p className="text-lg">콘텐츠1</p>
+
+
+      <div className="w-full bg-blue-400 text-white py-10">
+        <h2 className="text-2xl text-center font-bold mb-4">국가별 비율 차트</h2>
+        <div className="flex justify-center mb-4 space-x-4">
+          {Object.keys(chartTitles).map((key) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`px-4 py-2 rounded ${
+                activeTab === key ? "bg-white text-blue-600" : "bg-blue-600 text-white"
+              }`}
+            >
+              {chartTitles[key]}
+            </button>
+          ))}
+        </div>
+        <div className="w-4/5 bg-white p-4 shadow-md rounded-lg mx-auto"> {/* 너비를 80%로 설정 */}
+          <h3 className="text-lg font-semibold text-center mb-4 text-black">
+            {chartTitles[activeTab]}
+          </h3>
+          <ApexCharts
+            options={{
+              ...chartOptions(countries.map((c) => c.country)),
+              chart: {
+                ...chartOptions(countries.map((c) => c.country)).chart,
+                width: "100%", // 내부 차트의 너비를 100%로 유지
+              },
+            }}
+            series={[
+              {
+                name: "비율",
+                data: getChartData(activeTab).map((d) => d.y),
+              },
+            ]}
+            type="bar"
+            height={countries.length * 30} // 국가 개수에 비례한 높이
+          />
+        </div>
+      </div>
+
+      {/* 콘텐츠 3 */}
+      <div className="w-full bg-green-400 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+          <p className="text-gray-700 text-center md:text-left">
+           <h2 className="text-2xl font-semibold text-center mb-4">턴 투어드 부산</h2>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer too.
+          </p>
+          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+        </div>
       </div>
     </div>
-    {/* 콘텐츠 영역 */}
-    <div
-      className="w-full bg-blue-400 text-white flex items-center justify-center z-0"
-      style={{ height: "300px" }}
-    >
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">추가 콘텐츠 영역</h2>
-        <p className="text-lg">콘텐츠2</p>
-      </div>
-    </div>
-  </div>
-  
   );
-  
-  
 };
 
 export default Participation;
