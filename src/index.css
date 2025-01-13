@@ -2,3 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+/* 캐러셀 이동 버튼 크기 수정 */
+.slick-prev,
+.slick-next {
+  width: 50px; /* 버튼의 너비 */
+  height: 50px; /* 버튼의 높이 */
+  z-index: 1; /* 버튼이 차트 위에 보이도록 z-index 조정 */
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 50px; /* 화살표 아이콘 크기 */
+  color: #333; /* 아이콘 색상 */
+}
+
+/* 커스텀 버튼 위치 조정 (필요시) */
+.slick-prev {
+  left: -60px; /* 왼쪽 버튼 위치 */
+}
+
+.slick-next {
+  right: -60px; /* 오른쪽 버튼 위치 */
+}

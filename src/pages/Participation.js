@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Globe from "globe.gl";
 import * as THREE from "three";
 import ApexCharts from "react-apexcharts";
+import { countries } from "../data/countries";
 
 const Participation = () => {
   const globeEl = useRef();
@@ -17,30 +18,30 @@ const Participation = () => {
   });
   const [activeTab, setActiveTab] = useState("personnel");
 
-   // 참전국 데이터 (한국어로 변경 및 국기 이미지 URL 추가) supportType(지원구분), personnel(참전 연인원), role(참전 형태), casualties(피해 계), deaths(전사), injuries(부상), missing(실종), prisoners(포로) 추가.
-   const countries = [
-    { country: "미국", lat: 38.9072, lng: -77.0369, flag: "https://flagcdn.com/w320/us.png", supportType: "전투지원", personnel: 1789000, role: "육해공군", casualties: 133996, deaths: 33686, injuries: 92134, missing: 3737, prisoners: 4439 },
-    { country: "영국", lat: 51.5074, lng: -0.1278, flag: "https://flagcdn.com/w320/gb.png", supportType: "전투지원", personnel: 56000, role: "육해군", casualties: 4909, deaths: 1078, injuries: 2674, missing: 179, prisoners: 978 },
-    { country: "터키", lat: 39.9208, lng: 32.8541, flag: "https://flagcdn.com/w320/tr.png", supportType: "전투지원", personnel: 21212, role: "육군", casualties: 2365, deaths: 966, injuries: 1155, missing: 0, prisoners: 244 },
-    { country: "캐나다", lat: 45.4215, lng: -75.6972, flag: "https://flagcdn.com/w320/ca.png", supportType: "전투지원", personnel: 26791, role: "육해공군", casualties: 1761, deaths: 516, injuries: 1212, missing: 1, prisoners: 32 },
-    { country: "호주", lat: -35.2809, lng: 149.1300, flag: "https://flagcdn.com/w320/au.png", supportType: "전투지원", personnel: 17164, role: "육해공군", casualties: 1584, deaths: 340, injuries: 1216, missing: 0, prisoners: 28 },
-    { country: "프랑스", lat: 48.8566, lng: 2.3522, flag: "https://flagcdn.com/w320/fr.png", supportType: "전투지원", personnel: 3421, role: "육해군", casualties: 1289, deaths: 262, injuries: 1008, missing: 7, prisoners: 12 },
-    { country: "필리핀", lat: 14.5995, lng: 120.9842, flag: "https://flagcdn.com/w320/ph.png", supportType: "전투지원", personnel: 7420, role: "육군", casualties: 468, deaths: 112, injuries: 299, missing: 16, prisoners: 41 },
-    { country: "그리스", lat: 37.9838, lng: 23.7275, flag: "https://flagcdn.com/w320/gr.png", supportType: "전투지원", personnel: 4992, role: "육공군", casualties: 738, deaths: 192, injuries: 543, missing: 0, prisoners: 3 },
-    { country: "네덜란드", lat: 52.3676, lng: 4.9041, flag: "https://flagcdn.com/w320/nl.png", supportType: "전투지원", personnel: 5322, role: "육해군", casualties: 768, deaths: 120, injuries: 645, missing: 0, prisoners: 3 },
-    { country: "뉴질랜드", lat: -41.2865, lng: 174.7762, flag: "https://flagcdn.com/w320/nz.png", supportType: "전투지원", personnel: 3794, role: "육해군", casualties: 103, deaths: 23, injuries: 79, missing: 1, prisoners: 0 },
-    { country: "태국", lat: 13.7563, lng: 100.5018, flag: "https://flagcdn.com/w320/th.png", supportType: "전투지원", personnel: 6326, role: "육해공군", casualties: 1273, deaths: 129, injuries: 1139, missing: 5, prisoners: 0 },
-    { country: "남아프리카 공화국", lat: -25.7461, lng: 28.1881, flag: "https://flagcdn.com/w320/za.png", supportType: "전투지원", personnel: 826, role: "공군", casualties: 44, deaths: 36, injuries: 0, missing: 0, prisoners: 8 },
-    { country: "콜롬비아", lat: 4.711, lng: -74.0721, flag: "https://flagcdn.com/w320/co.png", supportType: "전투지원", personnel: 5100, role: "육군 및 해군", casualties: 639, deaths: 163, injuries: 448, missing: 28, prisoners: 0 },
-    { country: "벨기에", lat: 50.8503, lng: 4.3517, flag: "https://flagcdn.com/w320/be.png", supportType: "전투지원", personnel: 3498, role: "육군", casualties: 440, deaths: 99, injuries: 336, missing: 4, prisoners: 1 },
-    { country: "에티오피아", lat: 9.145, lng: 40.4897, flag: "https://flagcdn.com/w320/et.png", supportType: "전투지원", personnel: 3518, role: "육군", casualties: 658, deaths: 122, injuries: 536, missing: 0, prisoners: 0 },
-    { country: "룩셈부르크", lat: 49.8153, lng: 6.1296, flag: "https://flagcdn.com/w320/lu.png", supportType: "전투지원", personnel: 100, role: "육군", casualties: 15, deaths: 2, injuries: 13, missing: 0, prisoners: 0 },
-    { country: "이탈리아", lat: 41.9028, lng: 12.4964, flag: "https://flagcdn.com/w320/it.png", supportType: "의료지원", personnel: 128, role: "적십자병원", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
-    { country: "인도", lat: 20.5937, lng: 78.9629, flag: "https://flagcdn.com/w320/in.png", supportType: "의료지원", personnel: 627, role: "야전병원", casualties: 26, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
-    { country: "노르웨이", lat: 60.472, lng: 8.4689, flag: "https://flagcdn.com/w320/no.png", supportType: "의료지원", personnel: 623, role: "이동외과병원", casualties: 3, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
-    { country: "덴마크", lat: 56.2639, lng: 9.5018, flag: "https://flagcdn.com/w320/dk.png", supportType: "의료지원", personnel: 630, role: "병원선", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
-    { country: "스웨덴", lat: 60.1282, lng: 18.6435, flag: "https://flagcdn.com/w320/se.png", supportType: "의료지원", personnel: 1124, role: "적십자병원", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
-  ];
+  //  // 참전국 데이터 (한국어로 변경 및 국기 이미지 URL 추가) supportType(지원구분), personnel(참전 연인원), role(참전 형태), casualties(피해 계), deaths(전사), injuries(부상), missing(실종), prisoners(포로) 추가.
+  //  const countries = [
+  //   { country: "미국", lat: 38.9072, lng: -77.0369, flag: "https://flagcdn.com/w320/us.png", supportType: "전투지원", personnel: 1789000, role: "육해공군", casualties: 133996, deaths: 33686, injuries: 92134, missing: 3737, prisoners: 4439 },
+  //   { country: "영국", lat: 51.5074, lng: -0.1278, flag: "https://flagcdn.com/w320/gb.png", supportType: "전투지원", personnel: 56000, role: "육해군", casualties: 4909, deaths: 1078, injuries: 2674, missing: 179, prisoners: 978 },
+  //   { country: "터키", lat: 39.9208, lng: 32.8541, flag: "https://flagcdn.com/w320/tr.png", supportType: "전투지원", personnel: 21212, role: "육군", casualties: 2365, deaths: 966, injuries: 1155, missing: 0, prisoners: 244 },
+  //   { country: "캐나다", lat: 45.4215, lng: -75.6972, flag: "https://flagcdn.com/w320/ca.png", supportType: "전투지원", personnel: 26791, role: "육해공군", casualties: 1761, deaths: 516, injuries: 1212, missing: 1, prisoners: 32 },
+  //   { country: "호주", lat: -35.2809, lng: 149.1300, flag: "https://flagcdn.com/w320/au.png", supportType: "전투지원", personnel: 17164, role: "육해공군", casualties: 1584, deaths: 340, injuries: 1216, missing: 0, prisoners: 28 },
+  //   { country: "프랑스", lat: 48.8566, lng: 2.3522, flag: "https://flagcdn.com/w320/fr.png", supportType: "전투지원", personnel: 3421, role: "육해군", casualties: 1289, deaths: 262, injuries: 1008, missing: 7, prisoners: 12 },
+  //   { country: "필리핀", lat: 14.5995, lng: 120.9842, flag: "https://flagcdn.com/w320/ph.png", supportType: "전투지원", personnel: 7420, role: "육군", casualties: 468, deaths: 112, injuries: 299, missing: 16, prisoners: 41 },
+  //   { country: "그리스", lat: 37.9838, lng: 23.7275, flag: "https://flagcdn.com/w320/gr.png", supportType: "전투지원", personnel: 4992, role: "육공군", casualties: 738, deaths: 192, injuries: 543, missing: 0, prisoners: 3 },
+  //   { country: "네덜란드", lat: 52.3676, lng: 4.9041, flag: "https://flagcdn.com/w320/nl.png", supportType: "전투지원", personnel: 5322, role: "육해군", casualties: 768, deaths: 120, injuries: 645, missing: 0, prisoners: 3 },
+  //   { country: "뉴질랜드", lat: -41.2865, lng: 174.7762, flag: "https://flagcdn.com/w320/nz.png", supportType: "전투지원", personnel: 3794, role: "육해군", casualties: 103, deaths: 23, injuries: 79, missing: 1, prisoners: 0 },
+  //   { country: "태국", lat: 13.7563, lng: 100.5018, flag: "https://flagcdn.com/w320/th.png", supportType: "전투지원", personnel: 6326, role: "육해공군", casualties: 1273, deaths: 129, injuries: 1139, missing: 5, prisoners: 0 },
+  //   { country: "남아프리카 공화국", lat: -25.7461, lng: 28.1881, flag: "https://flagcdn.com/w320/za.png", supportType: "전투지원", personnel: 826, role: "공군", casualties: 44, deaths: 36, injuries: 0, missing: 0, prisoners: 8 },
+  //   { country: "콜롬비아", lat: 4.711, lng: -74.0721, flag: "https://flagcdn.com/w320/co.png", supportType: "전투지원", personnel: 5100, role: "육군 및 해군", casualties: 639, deaths: 163, injuries: 448, missing: 28, prisoners: 0 },
+  //   { country: "벨기에", lat: 50.8503, lng: 4.3517, flag: "https://flagcdn.com/w320/be.png", supportType: "전투지원", personnel: 3498, role: "육군", casualties: 440, deaths: 99, injuries: 336, missing: 4, prisoners: 1 },
+  //   { country: "에티오피아", lat: 9.145, lng: 40.4897, flag: "https://flagcdn.com/w320/et.png", supportType: "전투지원", personnel: 3518, role: "육군", casualties: 658, deaths: 122, injuries: 536, missing: 0, prisoners: 0 },
+  //   { country: "룩셈부르크", lat: 49.8153, lng: 6.1296, flag: "https://flagcdn.com/w320/lu.png", supportType: "전투지원", personnel: 100, role: "육군", casualties: 15, deaths: 2, injuries: 13, missing: 0, prisoners: 0 },
+  //   { country: "이탈리아", lat: 41.9028, lng: 12.4964, flag: "https://flagcdn.com/w320/it.png", supportType: "의료지원", personnel: 128, role: "적십자병원", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
+  //   { country: "인도", lat: 20.5937, lng: 78.9629, flag: "https://flagcdn.com/w320/in.png", supportType: "의료지원", personnel: 627, role: "야전병원", casualties: 26, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
+  //   { country: "노르웨이", lat: 60.472, lng: 8.4689, flag: "https://flagcdn.com/w320/no.png", supportType: "의료지원", personnel: 623, role: "이동외과병원", casualties: 3, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
+  //   { country: "덴마크", lat: 56.2639, lng: 9.5018, flag: "https://flagcdn.com/w320/dk.png", supportType: "의료지원", personnel: 630, role: "병원선", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
+  //   { country: "스웨덴", lat: 60.1282, lng: 18.6435, flag: "https://flagcdn.com/w320/se.png", supportType: "의료지원", personnel: 1124, role: "적십자병원", casualties: 0, deaths: 0, injuries: 0, missing: 0, prisoners: 0 },
+  // ];
 
     // 겹치는 유럽 국가 위치 조정
     const adjustedCountries = countries.map((country) => {
@@ -61,8 +62,6 @@ const Participation = () => {
       }
       return country;
     });
-
-
 
   const totals = countries.reduce(
     (acc, country) => ({
@@ -166,9 +165,6 @@ const Participation = () => {
     },
   });
   
-  
-  
-
   const chartTitles = {
     personnel: "참전 총인원 비율",
     deaths: "전사 비율",
@@ -176,7 +172,6 @@ const Participation = () => {
     missing: "실종 비율",
     prisoners: "포로 비율",
   };
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -308,8 +303,6 @@ const Participation = () => {
         </div>
       </div>
 
-
-
       <div className="w-full bg-gray-700 text-white py-10">
         <h2 className="text-2xl text-center font-bold mb-4">국가별 비율 차트</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-4/5 mx-auto">
@@ -329,7 +322,6 @@ const Participation = () => {
           ))}
         </div>
       </div>
-
 
       {/* 콘텐츠 3 */}
       <div className="w-full bg-green-400 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>

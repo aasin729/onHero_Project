@@ -18,7 +18,7 @@ const MainPage = () => {
           <source src={videoFile} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-       \
+       
       </div>
 
       {/* Section: 한국전쟁 정보 */}

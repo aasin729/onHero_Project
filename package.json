@@ -12,6 +12,8 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
     "three": "^0.172.0",
     "web-vitals": "^4.2.4"
   },
@@ -41,6 +43,7 @@
   },
   "proxy": "https://openapi.mnd.go.kr",
   "devDependencies": {
+    "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
