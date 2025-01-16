@@ -5,6 +5,9 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
+@import '@progress/kendo-theme-default/dist/all.css';
+
+
 /* 캐러셀 이동 버튼 크기 수정 */
 .slick-prev,
 .slick-next {
@@ -26,4 +29,26 @@
 
 .slick-next {
   right: -60px; /* 오른쪽 버튼 위치 */
+}
+
+
+/* Timeline 스타일 변경 */
+.k-timeline-card {
+  width: 90%; /* 카드 섹션 너비 조정 */
+}
+
+.k-timeline-flag {
+  font-size: 1.5rem; /* 날짜 및 년도 폰트 크기 */
+  font-weight: bold; /* 날짜 강조 */
+}
+
+.k-timeline-circle {
+  width: 20px; /* 동그라미 크기 */
+  height: 20px; /* 동그라미 크기 */
+  border-width: 3px; /* 동그라미 테두리 굵기 */
+}
+
+.k-timeline-line {
+  width: 4px; /* 수직선 굵기 */
+  background-color: #d8d8d8; /* 수직선 색상 */
 }

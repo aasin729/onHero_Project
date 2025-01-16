@@ -212,10 +212,15 @@ const Excavation = () => {
   };
 
   return (
-    <div className="mt-20">
-      {/* {loading && <p>데이터를 불러오는 중입니다...</p>}
-      {error && <p>{error}</p>} */}
-
+    <div className="mt-20 relative">
+      {/* 로딩 메시지 */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <p className="bg-white text-xl font-semibold p-6 rounded-lg shadow-lg">
+            데이터를 불러오는 중입니다...
+          </p>
+        </div>
+      )}
       <div
         ref={totalsSectionRef}
         className="w-full bg-gray-100 py-12"

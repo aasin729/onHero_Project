@@ -47,7 +47,7 @@ const BattleInfo = () => {
           <tr>
             <th>행번호</th>
             <th>전투명</th>
-            {/* <th>전투내용</th> */}
+            <th>전투내용</th>
             <th>기간</th>
             <th>전투지역</th>
             <th>주요인물</th>
@@ -59,9 +59,9 @@ const BattleInfo = () => {
               <tr key={index}>
                 <td>{item.rowno}</td>
                 <td>{item.title}</td>
-                    {/* <td style={{ whiteSpace: "pre-wrap" }}>
+                    <td style={{ whiteSpace: "pre-wrap" }}>
                     {removeHtmlTags(item.ctnt)}
-                    </td> */}
+                    </td>
                 <td>{item.addtn_itm_2}</td>
                 <td>{item.addtn_itm_3}</td>
                 <td>{item.addtn_itm_4}</td>
