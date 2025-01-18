@@ -107,26 +107,51 @@ const BattleInfo = () => {
   return (
     <>
       <HeroCards />
-      {/* app-wrapper 시작 */}
-      <div className="app-wrapper   bg-gray-900 text-white p-10">
+
+       {/* 콘텐츠 3 */}
+       <div className="w-full bg-blue-300 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+          <p className="text-gray-700 text-center md:text-left">
+           <h2 className="text-2xl font-semibold text-center mb-4">콘텐츠</h2>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer too.
+          </p>
+          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+        </div>
+      </div>
+
+      <div className="app-wrapper bg-gray-900 text-white p-10">
         <h1 className="text-3xl font-bold mb-10 text-center">전투 정보 타임라인</h1>
+
+        {/* 타임라인 */}
         <div className="relative px-20">
+          {/* 중앙 라인 */}
+          <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300"></div>
+
           {visibleData.map((dateKey, index) => {
             const group = battleData[dateKey];
             const isLeft = index % 2 === 0;
-
             return (
-              <div key={index} className={`flex ${isLeft ? "justify-start" : "justify-end"} mb-10`}>
+              <div
+                key={index}
+                className={`flex items-center w-3/4 mx-auto mb-10 ${
+                  isLeft ? "justify-start" : "justify-end"
+                }`}
+              >
+                {/* 전투 정보 카드 */}
                 <div
-                  className={`relative w-1/2 p-6 bg-gray-800 rounded-lg shadow-md ${
-                    isLeft ? "ml-10" : "mr-10"
+                  className={`relative w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
+                    isLeft ? "ml-10 text-center" : "mr-10 text-center"
                   }`}
                 >
+                  {/* 아이콘 */}
                   <div
                     className={`absolute w-6 h-6 bg-pink-500 rounded-full top-1/2 transform -translate-y-1/2 ${
                       isLeft ? "-left-3" : "-right-3"
                     }`}
                   ></div>
+
                   <p className="text-pink-400 font-semibold mb-2">{dateKey}</p>
                   {group.battles.map((battle, i) => (
                     <div
@@ -134,7 +159,7 @@ const BattleInfo = () => {
                       className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md transition-opacity duration-300 hover:opacity-75 cursor-pointer"
                       onClick={() => openModal(battle)}
                     >
-                      <h3 className="text-xl font-bold">{battle.title}</h3>
+                      <h3 className="text-lg font-bold">{battle.title}</h3>
                       <p className="text-sm mt-1">
                         <strong>전투 지역:</strong> {battle.region}
                       </p>
@@ -148,6 +173,8 @@ const BattleInfo = () => {
             );
           })}
         </div>
+
+        {/* 버튼 영역 */}
         <div className="text-center mt-10">
           {visibleCount < Object.keys(battleData).length && (
             <button
@@ -168,10 +195,7 @@ const BattleInfo = () => {
         {/* 모달 */}
         {isModalOpen && selectedBattle && (
           <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div
-              className="bg-white text-black p-6 rounded-lg w-1/2 max-h-[80vh] overflow-y-auto"
-              style={{ maxHeight: "80vh", overflowY: "auto" }}
-            >
+            <div className="bg-white text-black p-6 rounded-lg w-1/2 max-h-[80vh] overflow-y-auto">
               <h2 className="text-2xl font-bold mb-4">{selectedBattle.title}</h2>
               <p className="text-sm mb-4">
                 <strong>전투 지역:</strong> {selectedBattle.region}

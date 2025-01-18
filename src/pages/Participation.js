@@ -324,13 +324,12 @@ const Participation = () => {
       </div>
 
       {/* 콘텐츠 3 */}
-      <div className="w-full bg-green-400 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
+      <div className="w-full bg-blue-400 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
           <p className="text-gray-700 text-center md:text-left">
            <h2 className="text-2xl font-semibold text-center mb-4">턴 투어드 부산</h2>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer too.
+           유엔참전용사 국제추모의 날(UN Veterans International Memorial Day)은 매년 11월 11일에 6.25전쟁에 참전하여 
+           대한민국의 자유민주주의를 수호한 유엔참전용사의 희생과 공헌을 기념하고, 이들을 유엔참전국과 함께 추모하기 위한 대한민국의 기념일이다.
           </p>
           <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
         </div>

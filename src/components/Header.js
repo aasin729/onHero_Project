@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full fixed top-0 z-10  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-black"}`}
+      className={`w-full fixed top-0 z-50  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-black"}`}
     >
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* 로고 부분 */}
@@ -58,11 +58,11 @@ const Header = () => {
               전투/선열정보
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/cyber-memorial" className="text-xl hover:text-gray-300">
               사이버추모
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         {/* 햄버거 메뉴 버튼 */}
@@ -113,11 +113,11 @@ const Header = () => {
             전투/선열정보
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/cyber-memorial" className="block py-2 text-lg font-semibold hover:text-gray-300">
             사이버추모
           </Link>
-        </li>
+        </li> */}
       </ul>
     </header>
   );

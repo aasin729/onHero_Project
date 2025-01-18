@@ -5,7 +5,7 @@ import Participation from "./pages/Participation";
 import Excavation from "./pages/Excavation";
 import BurialStatus from "./pages/BurialStatus";
 import BattleInfo from "./pages/BattleInfo";
-import CyberMemorial from "./pages/CyberMemorial";
+// import CyberMemorial from "./pages/CyberMemorial";
 import Header from "./components/Header";
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/excavation" element={<Excavation />} />
         <Route path="/burial-status" element={<BurialStatus />} />
         <Route path="/battle-info" element={<BattleInfo />} />
-        <Route path="/cyber-memorial" element={<CyberMemorial />} />
+        {/* <Route path="/cyber-memorial" element={<CyberMemorial />} /> */}
       </Routes>
     </Router>
   );

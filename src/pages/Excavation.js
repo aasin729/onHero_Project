@@ -212,6 +212,7 @@ const Excavation = () => {
   };
 
   return (
+    <>
     <div className="mt-20 relative">
       {/* 로딩 메시지 */}
       {loading && (
@@ -341,6 +342,19 @@ const Excavation = () => {
         </Slider>
       </div>
     </div>
+      {/* 콘텐츠 3 */}
+      <div className="w-full bg-blue-300 mt-10 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+          <p className="text-gray-700 text-center md:text-left">
+           <h2 className="text-2xl font-semibold text-center mb-4">국방부 유해발굴단</h2>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer too.
+          </p>
+          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+        </div>
+      </div>
+    </>
   );
 };
 

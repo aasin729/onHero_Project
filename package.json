@@ -19,6 +19,7 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
+    "react-vertical-timeline-component": "^3.5.3",
     "slick-carousel": "^1.8.1",
     "tailwind-scrollbar-hide": "^2.0.0",
     "three": "^0.172.0",
