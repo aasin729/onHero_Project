@@ -1,6 +1,7 @@
 import React from "react";
 import videoFile from "../assets/videos/movie1.mp4";
 import Header from "../components/Header";
+import KoreaWar from "../assets/images/koreawar.png";
 
 const MainPage = () => {
   return (
@@ -23,14 +24,61 @@ const MainPage = () => {
 
       {/* Section: 한국전쟁 정보 */}
       <section className="py-8 px-4 bg-white">
-        <h2 className="text-2xl font-semibold text-center mb-4">한국전쟁</h2>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <p className="text-gray-700 text-center md:text-left">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer too.
+        <div className="max-w-screen-xl mx-auto">
+          <h2 className="text-2xl font-semibold text-center mb-8">한국전쟁 (6.25 전쟁)</h2>
+          <p className="text-gray-700 text-center mb-20">
+            1950년 6월 25일 새벽에 북한 공산군이 남북군사분계선이던 38선 전역에 걸쳐 불법 남침함으로써 일어난 한반도에서의 전쟁
           </p>
-          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
+
+          {/* Circle Grid Section */}
+          <div className="flex justify-center items-center mb-40">
+            <div className="grid grid-cols-3 gap-0">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-400 text-white font-semibold flex items-center justify-center w-60 h-60 rounded-full shadow-md"
+                >
+                  {index + 1}. 남한 공산화를 위한 침략 전쟁
+                </div>
+              ))}
+            </div>
+          </div>
+            
+          {/* Image and Text Section */}
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-20">
+            <div className="bg-gray-300 h-full w-full md:w-1/2 rounded-lg flex items-center justify-center text-gray-700 overflow-hidden">
+              <img 
+                src={KoreaWar} 
+                alt="6.25 전쟁 관련 이미지" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <p className="text-gray-700 text-sm leading-relaxed md:w-1/2">
+              6·25 전쟁은 1950년 6월 25일 북한군의 기습남침으로 시작되어 1953년 7월 27일 휴전이 성립되기까지 약 3년 1개월 2일간 계속되었다.
+              기간 중 한반도는 38도선을 각각 3회씩이나 넘나드는 낙동강에서 압록강까지 오르내렸으며, 이로 인한 사상 북측에 145만 명의
+              사상자를 포함해 항공기부터 탱크 1,756대의 파괴로 전 국토의 80%가 초토화되었다.
+            </p>
+          </div>
+            
+          {/* YouTube Video Section */}
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-20">
+            <p className="text-gray-700 text-sm leading-relaxed md:w-1/2">
+              전쟁 결과 한국과 유엔군은 전사 17만 6,000명, 부상 55만 5,000여명, 실종 및 포로 약 4만 2,000명의 인명 피해를 입었고,
+              북한과 중국군은 사망 36만 명, 부상 111만여명, 실종 및 포로 14만 5천명의 피해를 입은 것으로 추정된다. 전국의 61만 가옥과
+              4203개의 학교와 파괴되고 삶의 터전을 잃은 350만 명의 난민과 300만명의 학동생도들이 타향에서 외로움과 가난, 고통 등을
+              유중이 반세기가 지난 지금까지 끝나지 않은 전쟁으로 남아 있다.
+            </p>
+            <div className="bg-gray-300 h-48 w-full md:w-1/2 rounded-lg flex items-center justify-center">
+              <iframe
+                className="w-full h-full rounded-lg"
+                src="https://www.youtube.com/embed/영상ID" // 영상 ID를 실제로 대체하세요
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
         </div>
       </section>
 
