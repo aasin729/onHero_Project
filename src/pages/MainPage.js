@@ -2,6 +2,7 @@ import React from "react";
 import videoFile from "../assets/videos/movie1.mp4";
 import Header from "../components/Header";
 import KoreaWar from "../assets/images/koreawar.png";
+import RelatedSites from "../components/RelatedSites";
 
 const MainPage = () => {
   return (
@@ -126,6 +127,8 @@ const MainPage = () => {
           </div>
         </div>
       </section>
+      {/* Related Sites Section */}
+      <RelatedSites /> {/* 추가된 부분 */}
 
       {/* Footer */}
       <footer className="py-8 bg-gray-800 text-white text-center">
