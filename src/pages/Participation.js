@@ -267,6 +267,7 @@ const Participation = () => {
       </div>
     </div>
 
+        {/* 참전 현황부분 */}
       <div ref={totalsSectionRef} className="w-full bg-white text-black flex flex-col items-center justify-center py-20 border-t border-gray-300">
         <h2 className="text-3xl font-bold mb-20">UN군 총 참전 현황</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 text-center">
@@ -303,6 +304,7 @@ const Participation = () => {
         </div>
       </div>
 
+        {/* 차트부분 */}
       <div className="w-full bg-gray-700 text-white py-10">
         <h2 className="text-2xl text-center font-bold mb-4">국가별 비율 차트</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-4/5 mx-auto">

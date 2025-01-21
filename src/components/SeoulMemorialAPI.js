@@ -8,7 +8,7 @@ const SeoulMemorialAPI = () => {
   const fetchData = async () => {
     try {
       const API_KEY = "3230313638333132383734373732313039";
-      // API 요청 URL (전체 URL 대신 상대 경로 사용)
+      // API 요청 URL
       const API_URL = `/${API_KEY}/json/DS_MMCMTSEOUL_BURAL_PRST/1/12`;
 
       // Axios를 사용한 API 호출
@@ -28,42 +28,39 @@ const SeoulMemorialAPI = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h3>국립서울현충원 안장 현황</h3>
-      {error && <p>{error}</p>}
+    <div className="container mx-auto mt-20 p-4">
+      <h3 className="text-2xl font-bold mb-4 text-center">국립서울현충원 안장 현황</h3>
+      {error && <p className="text-red-500">{error}</p>}
 
-      <table border="1" cellPadding="10" style={{ borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th>조사 일자</th>
-            <th>순번</th>
-            <th>구분</th>
-            <th>총 혼당 안장</th>
-            <th>묘소 안장</th>
-            <th>총 혼당 잔여능력</th>
-            <th>묘소 잔여능력</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length > 0 ? (
-            data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.invstg_date}</td>
-                <td>{item.seq}</td>
-                <td>{item.dvs}</td>
-                <td>{item.lylddcmt_bural}</td>
-                <td>{item.grv_bural}</td>
-                <td>{item.lylddcmt_rmndrablt}</td>
-                <td>{item.grv_rmndrablt}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7">데이터를 불러오는 중입니다...</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {data.length > 0 ? (
+          data.map((item, index) => (
+            <div
+              key={index}
+              className="bg-gray-800 text-white p-4 rounded-lg shadow-lg"
+            >
+              <div className="text-sm">
+                <p className="text-xl mb-4 text-center font-semibold"> {item.dvs}</p>
+                <p>
+                  <span className="font-bold">총 혼당 안장:</span> {item.lylddcmt_bural}
+                </p>
+                <p>
+                  <span className="font-bold">묘소 안장:</span> {item.grv_bural}
+                </p>
+                <p>
+                  <span className="font-bold">총 혼당 잔여능력:</span>{" "}
+                  {item.lylddcmt_rmndrablt}
+                </p>
+                <p>
+                  <span className="font-bold">묘소 잔여능력:</span> {item.grv_rmndrablt}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-full">데이터를 불러오는 중입니다...</p>
+        )}
+      </div>
     </div>
   );
 };

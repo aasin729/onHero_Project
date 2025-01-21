@@ -4,27 +4,27 @@ const RelatedSites = () => {
   const sites = [
     {
       name: "국방부",
-      logo: "https://i.namu.wiki/i/u8TaOgiNGBM_aEWiYJlD61zTCytP8ZD7tzVhyPeG_knxhaHoptPqA0ZTbNE95j-IGGcR6syUKVTqqmt-s6YBJL_7T0BHXo2q5yGz20kmocR3MI4A8-Rjkp37jl74EBsaFCmUQk6H2j345CNqUTVjXg.svg",
+      logo: "https://i.namu.wiki/i/IJBNbIG_c2HGNxHCOuS4veoC8lFXO9ZEPsaoznNLWnTGETjIw1nZm9LhiJTxoUa_XT34NBgWySIFU-HC3dUmSnRhCVHBPEIin1_3H4bDbuuInQ3MPTpGhnlMhWUAruxt4_8peMnqlZho11naMN8Oxg.svg",
       link: "https://www.mnd.go.kr",
     },
     {
       name: "육군",
-      logo: "https://i.namu.wiki/i/1EdD2_f5XGp6iZs6FsYO-8prJKNp0fqNzGhbUr7MZ2nZnQYsOlx04rY99Uof8Jt-d-DnlTWVsvmdARMBUMm8GbhBRWc-E9sVZccFLEbwEGHQAdM8zzJ2mvWVUGfQvRMoNQaeKwKzoXhhnAyiYkdqjQ.svg",
+      logo: "https://i.namu.wiki/i/rdXqteN4mCOP4WKewnoTD9DyDwCDrK6S587A5PJwW31zevHDGkkTA8lpzAEYWzNpHHH4uDWYiOCTfmI0QLC6AmdtGDkmzyFpg4Gi4JE87Pey5SVCmOd8AC39JTAWXNkQyS4EZyyvgOQ0ti_HW_cGeA.svg",
       link: "https://www.army.mil.kr",
     },
     {
       name: "해군",
-      logo: "https://i.namu.wiki/i/E7gfNxFyzPtSO72U2Rn0Q5Dn6cd8HfCRlx4Ck6TqxRI7uNqWPCF7MXbgmBLI_dM_NBxj1LpoZeJxfkhjG81MBV4Us0uBZ4UOXL0TBihAFV19o4nQb5HdmCFVCSZj67JkkmvCbFmlPqrkZ_YhgdhX4w.svg",
+      logo: "https://i.namu.wiki/i/8EGKX4e0So6FN6bttSFEgh3p_NUcjrqSiDVIDS7g1D1W0LA-0vpzTh55upGBEe4Es58cgwQk9VV_wyK2h2JEFVmjUAPhH-VKlT5I9RGYaejwbhcrIxGehRAi1ii3b4OQ6KynH5lyQYGA83QWUY_YuQ.svg",
       link: "https://www.navy.mil.kr",
     },
     {
       name: "공군",
-      logo: "https://i.namu.wiki/i/v7kzEZOl5TYgPUFOVS77C8N50J0a-GVXmh6QCZRimXJJ-XMyUkTrW0Om8rskOWG8ogWQKzzKcQ9LtAsgNu9N1Bkh-lmuvnmRh1mjyHFecUGmMctAtqwv5kkg5ZQ_03zwz1ni6-R6Xn4LJipqTpFstg.svg",
+      logo: "https://i.namu.wiki/i/uxQOz1V8BQ8EHIctAoD8zFojQL0fVXXOKiLEQLQSioQMQD47X1CyRvMdp6BJ7u0dGcGOpwwhyQqAaNHKuB55wDQcFTyxihxIqpe9DGtaQI_TqDtEOn1OcOZntYXD_Va8_mGtg1kQGcZJxpLI2mmEqQ.svg",
       link: "https://www.airforce.mil.kr",
     },
     {
       name: "해병대",
-      logo: "https://i.namu.wiki/i/V8tWYXMjMt4lvTxwMh0YeP1DTmyrLfRf3Xl_t0PhCwMo61Akl-uUVmgb5iIJJ9EKc-NTbl61v5sLrptXDysKMeXnN_1JHLEQQGhql1N6Fl4gSkLK4D0rO4BQU5uGVjOEBgAkr2kYauNqWWeH9tBW2g.svg",
+      logo: "https://i.namu.wiki/i/Oy7slOgI1QOvXTm_2tYZkEG3-5xts4PSNuyq1HDXKMwiRA0OrI7Q5PX_MednUshm14NUPh9edNtK_HOxArUYIZbAPFjI7Tu-9VgDJy5jjBTzcYPPBuK_ET24i8XOvYq98nebUc3izfYWxuMqB1PNIg.svg",
       link: "https://www.rokmc.mil.kr",
     },
     {
