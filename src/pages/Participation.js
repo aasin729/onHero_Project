@@ -3,6 +3,7 @@ import Globe from "globe.gl";
 import * as THREE from "three";
 import ApexCharts from "react-apexcharts";
 import { countries } from "../data/countries";
+import Footer from "../components/footer";
 
 const Participation = () => {
   const globeEl = useRef();
@@ -337,6 +338,8 @@ const Participation = () => {
         </div>
       </div>
 
+    {/* Footer */}
+     <Footer />
     </div>
   );
 };

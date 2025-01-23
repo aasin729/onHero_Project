@@ -5,6 +5,7 @@ import videoFile from "../assets/videos/movie1.mp4";
 import Header from "../components/Header";
 import KoreaWar from "../assets/images/koreawar.png";
 import RelatedSites from "../components/RelatedSites";
+import Footer from "../components/footer";
 
 const MainPage = () => {
   useEffect(() => {
@@ -225,9 +226,9 @@ const MainPage = () => {
       <RelatedSites data-aos="fade" />
 
       {/* Footer */}
-      <footer className="py-8 bg-gray-800 text-white text-center" data-aos="fade">
-        사이버 추모
-      </footer>
+     <Footer />
+
+      
     </div>
   );
 };

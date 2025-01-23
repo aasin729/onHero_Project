@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import HeroCards from "../components/HeroCards";
+import Footer from "../components/footer";
 
 const BattleInfo = () => {
   const [battleData, setBattleData] = useState([]);
@@ -224,6 +225,8 @@ const BattleInfo = () => {
           </div>
         )}
       </div>
+      {/* Footer */}
+     <Footer />
     </>
   );
 };

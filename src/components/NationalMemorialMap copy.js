@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import burialLocations from "../data/burialLocations"
-
 
 const NationalMemorialMap = () => {
   const [burialData, setBurialData] = useState([]);
@@ -48,7 +46,7 @@ const NationalMemorialMap = () => {
 
   useEffect(() => {
     fetchBurialData();
-  
+
     // 네이버 맵 스크립트 로드
     const script = document.createElement("script");
     script.src = "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8q6h69e47y";
@@ -60,44 +58,25 @@ const NationalMemorialMap = () => {
           zoom: 17,
           mapTypeId: window.naver.maps.MapTypeId.SATELLITE,
         };
-  
+
         const map = new window.naver.maps.Map("map", mapOptions);
-  
-        // 마커 추가 (import한 JSON 데이터를 이용)
-        burialLocations.forEach((location) => {
-          const marker = new window.naver.maps.Marker({
-            position: new window.naver.maps.LatLng(location.lat, location.lng),
-            map: map,
-            title: location.burialName,
-          });
-  
-          // InfoWindow 생성
-          const infoWindow = new window.naver.maps.InfoWindow({
-            content: `<div style="padding:5px;">${location.burialName}</div>`,
-            disableAnchor: true,
-          });
-  
-          // 마커에 마우스 호버 이벤트 추가
-          window.naver.maps.Event.addListener(marker, "mouseover", () => {
-            infoWindow.open(map, marker);
-          });
-  
-          // 마우스가 마커에서 벗어나면 InfoWindow 닫기
-          window.naver.maps.Event.addListener(marker, "mouseout", () => {
-            infoWindow.close();
-          });
+
+        // 마커 추가
+        new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(37.50130234388042, 126.97336693184688),
+          map: map,
+          title: "국립서울현충원",
         });
       } else {
         console.error("네이버 지도 객체를 로드하지 못했습니다.");
       }
     };
     document.head.appendChild(script);
-  
+
     return () => {
       document.head.removeChild(script);
     };
   }, []);
-  
 
   // 검색 및 필터 실행 핸들러
   const handleSearchAndFilter = () => {
@@ -145,7 +124,7 @@ const NationalMemorialMap = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-gray-200">
+    <div className="container mx-auto p-4  bg-gray-200">
       <h1 className="text-2xl font-bold text-center mb-6">서울국립현충원</h1>
 
       {/* 지도 */}

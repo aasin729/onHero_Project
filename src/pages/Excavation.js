@@ -3,6 +3,7 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 import Slider from "react-slick";
 import YoutubeSection from "../components/YoutubeSection";
+import Footer from "../components/footer";
 
 const Excavation = () => {
   const [data, setData] = useState([]);
@@ -342,6 +343,9 @@ const Excavation = () => {
     </div>
     {/* 유해 발굴단 소개 컴포넌트 */}
      <YoutubeSection />
+
+    {/* Footer */}
+    <Footer />
     </>
   );
 };

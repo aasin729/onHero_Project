@@ -1,6 +1,7 @@
 import React from "react";
 import SeoulMemorialAPI from "../components/SeoulMemorialAPI";
 import NationalMemorialMap from "../components/NationalMemorialMap";
+import Footer from "../components/footer";
 
 const BurialStatus = () => {
   return (
@@ -21,7 +22,9 @@ const BurialStatus = () => {
         </div>
       </div>
        <NationalMemorialMap />
-     
+        
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
