@@ -145,7 +145,7 @@ const NationalMemorialMap = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 bg-gray-200">
+    <div className=" mx-auto p-4 bg-gray-200">
       <h1 className="text-2xl font-bold text-center mb-6">서울국립현충원</h1>
 
       {/* 지도 */}
@@ -183,7 +183,6 @@ const NationalMemorialMap = () => {
       </div>
 
       {/* 안장자 현황 데이터 */}
-      <div className="container">
         <h3 className="text-lg font-semibold mb-4">국립서울현충원 안장자 현황</h3>
         {loading && <p className="text-center">로딩 중...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
@@ -277,7 +276,7 @@ const NationalMemorialMap = () => {
           </>
         )}
       </div>
-    </div>
+
   );
 };
 

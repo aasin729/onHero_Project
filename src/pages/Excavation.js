@@ -212,7 +212,7 @@ const Excavation = () => {
 
   return (
     <>
-    <div className="mt-20 relative">
+    <div className="mt-20  relative">
       {/* 로딩 메시지 */}
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
