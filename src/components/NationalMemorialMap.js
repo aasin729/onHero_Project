@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import burialLocations from "../data/burialLocations"
-
+import burialLocations from "../data/burialLocations";
 
 const NationalMemorialMap = () => {
   const [burialData, setBurialData] = useState([]);
@@ -9,33 +8,40 @@ const NationalMemorialMap = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 검색 및 필터링 상태
+  const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMilitary, setSelectedMilitary] = useState("");
+  const [militaryOptions, setMilitaryOptions] = useState([]);
 
-  const [militaryOptions, setMilitaryOptions] = useState([]); // 동적 군별 옵션
-
-  // 페이징 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
-  const maxPageButtons = 4; // 최대 페이지 버튼 개수
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
-  // API 호출 함수
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+
+  const toggleMapModal = () => {
+    setIsMapModalOpen(!isMapModalOpen);
+  };
+
+  const itemsPerPage = 15;
+  const maxPageButtons = 4;
+
   const fetchBurialData = async () => {
     setLoading(true);
     setError(null);
     try {
       const API_KEY = "3230313638333132383734373732313039";
-      const totalDataCount = 60000; // 대략적인 데이터 수
+      const totalDataCount = 60000;
       const API_URL = `/${API_KEY}/json/DS_TB_MND_NTNLMMCMT_BURALPRSTS/1/${totalDataCount}`;
 
       const response = await axios.get(API_URL);
       const result = response.data.DS_TB_MND_NTNLMMCMT_BURALPRSTS.row;
-      const reversedData = result.reverse() || []; // 데이터 역순으로 정렬
+      const reversedData = result.reverse() || [];
       setBurialData(reversedData);
-      setFilteredData(reversedData); // 필터링 데이터 초기화
+      setFilteredData(reversedData);
 
-      // 군별 옵션 추출
       const militarySet = new Set(reversedData.map((item) => item.mildsc));
       setMilitaryOptions([...militarySet]);
     } catch (error) {
@@ -48,58 +54,80 @@ const NationalMemorialMap = () => {
 
   useEffect(() => {
     fetchBurialData();
-  
-    // 네이버 맵 스크립트 로드
+
     const script = document.createElement("script");
     script.src = "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8q6h69e47y";
     script.async = true;
     script.onload = () => {
       if (window.naver) {
         const mapOptions = {
-          center: new window.naver.maps.LatLng(37.50130234388042, 126.97336693184688),
-          zoom: 17,
+          center: new window.naver.maps.LatLng(37.499, 126.97336693184688),
+          zoom: 16,
           mapTypeId: window.naver.maps.MapTypeId.SATELLITE,
         };
-  
-        const map = new window.naver.maps.Map("map", mapOptions);
-  
-        // 마커 추가 (import한 JSON 데이터를 이용)
-        burialLocations.forEach((location) => {
-          const marker = new window.naver.maps.Marker({
+
+        const mapInstance = new window.naver.maps.Map("map", mapOptions);
+        setMap(mapInstance);
+
+        const createdMarkers = burialLocations.map((location) => {
+          const isTitleOnly = [
+            "봉안식장",
+            "제1충혼당",
+            "제2충혼당",
+            "현충문",
+            "현충관",
+          ].includes(location.burialName);
+
+          const markerOptions = {
             position: new window.naver.maps.LatLng(location.lat, location.lng),
-            map: map,
+            map: mapInstance,
             title: location.burialName,
-          });
-  
-          // InfoWindow 생성
+          };
+
+          if (!isTitleOnly) {
+            markerOptions.icon = {
+              url: "/img/light.png",
+              size: new window.naver.maps.Size(35, 35),
+              scaledSize: new window.naver.maps.Size(35, 35),
+              origin: new window.naver.maps.Point(0, 0),
+              anchor: new window.naver.maps.Point(16, 32),
+            };
+          }
+
+          const marker = new window.naver.maps.Marker(markerOptions);
+
           const infoWindow = new window.naver.maps.InfoWindow({
             content: `<div style="padding:5px;">${location.burialName}</div>`,
             disableAnchor: true,
           });
-  
-          // 마커에 마우스 호버 이벤트 추가
+
           window.naver.maps.Event.addListener(marker, "mouseover", () => {
-            infoWindow.open(map, marker);
+            infoWindow.open(mapInstance, marker);
           });
-  
-          // 마우스가 마커에서 벗어나면 InfoWindow 닫기
+
           window.naver.maps.Event.addListener(marker, "mouseout", () => {
             infoWindow.close();
           });
+
+          return { marker, location };
         });
+
+        setMarkers(createdMarkers);
       } else {
         console.error("네이버 지도 객체를 로드하지 못했습니다.");
       }
     };
     document.head.appendChild(script);
-  
+
     return () => {
       document.head.removeChild(script);
     };
   }, []);
-  
 
-  // 검색 및 필터 실행 핸들러
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   const handleSearchAndFilter = () => {
     let filtered = burialData;
 
@@ -114,25 +142,36 @@ const NationalMemorialMap = () => {
     }
 
     setFilteredData(filtered);
-    setCurrentPage(1); // 검색 후 첫 페이지로 이동
+    setCurrentPage(1);
   };
 
-  // 현재 페이지에 표시할 데이터 계산
+  const handleRowClick = (index, burialName) => {
+    setSelectedRowIndex(index);
+    if (!map || markers.length === 0) return;
+
+    markers.forEach(({ marker, location }) => {
+      if (location.burialName === burialName) {
+        marker.setMap(map);
+        map.setCenter(marker.getPosition());
+        map.setZoom(18);
+      } else {
+        marker.setMap(null);
+      }
+    });
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
-  // 총 페이지 수 계산
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
     }
   };
 
-  // 페이지 번호 목록 생성
   const getPageNumbers = () => {
     const pages = [];
     const startPage = Math.max(currentPage - Math.floor(maxPageButtons / 2), 1);
@@ -145,114 +184,115 @@ const NationalMemorialMap = () => {
   };
 
   return (
-    <div className=" mx-auto p-4 bg-gray-200">
-      <h1 className="text-2xl font-bold text-center mb-6">서울국립현충원</h1>
-
-      {/* 지도 */}
-      <div className="w-full h-[600px] mb-6">
-        <div id="map" className="w-full h-full rounded shadow-lg"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto p-6 bg-gray-100">
+      <div className="col-span-2 mb-6">
+        <h2 className="text-xl font-bold mb-4">검색 및 필터링</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <input
+            type="text"
+            placeholder="이름 검색"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setSelectedMilitary("")}
+            className="w-full px-4 py-2 mb-2 border rounded shadow focus:ring-2 focus:ring-blue-400"
+          />
+          <select
+            value={selectedMilitary}
+            onChange={(e) => setSelectedMilitary(e.target.value)}
+            onClick={() => setSearchQuery("")}
+            className="w-full px-4 py-2 border rounded shadow focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="">군별 선택</option>
+            {militaryOptions.map((military, index) => (
+              <option key={index} value={military}>
+                {military}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={handleSearchAndFilter}
+            className="w-full px-6 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
+          >
+            검색
+          </button>
+          <button
+            onClick={toggleMapModal}
+            className="w-full px-6 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600"
+          >
+            현충원 지도보기
+          </button>
+        </div>
       </div>
 
-      {/* 검색 및 필터링 */}
-      <div className="flex items-center gap-4 mb-6">
-        <input
-          type="text"
-          placeholder="이름으로 검색"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <select
-          value={selectedMilitary}
-          onChange={(e) => setSelectedMilitary(e.target.value)}
-          className="px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">군별 선택</option>
-          {militaryOptions.map((military, index) => (
-            <option key={index} value={military}>
-              {military}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={handleSearchAndFilter}
-          className="px-6 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
-        >
-          검색
-        </button>
+      <div className="col-span-1 flex flex-col" style={{ height: "750px" }}>
+        <h2 className="text-xl font-bold mb-4">서울국립현충원 지도</h2>
+        <div id="map" className="w-full flex-grow rounded shadow-lg border"></div>
       </div>
 
-      {/* 안장자 현황 데이터 */}
-        <h3 className="text-lg font-semibold mb-4">국립서울현충원 안장자 현황</h3>
-        {loading && <p className="text-center">로딩 중...</p>}
-        {error && <p className="text-center text-red-500">{error}</p>}
-        {!loading && !error && (
+      <div className="col-span-1 flex flex-col" style={{ height: "700px" }}>
+        <h2 className="text-xl font-bold mb-4">안장자 현황</h2>
+        {loading ? (
+            <div className="flex flex-col items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-8 border-blue-500 border-solid border-opacity-90"></div>
+            <p className="mt-8 text-center text-gray-600 text-xl font-semibold">
+              현재 안장자 데이터를 로딩중입니다... 잠시만 기다려주십시오.
+            </p>
+          </div>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full text-left border-collapse border border-gray-300 shadow-sm">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">순번</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">묘역</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">성명</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">군별</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">계급</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">사망일</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">안장일</th>
-                    <th className="border border-gray-300 px-4 text-xl py-2 text-center">안장 위치</th>
+            <table className="table-auto w-full text-left border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border px-4 py-2 text-center">묘역</th>
+                  <th className="border px-4 py-2 text-center">성명</th>
+                  <th className="border px-4 py-2 text-center">군별</th>
+                  <th className="border px-4 py-2 text-center">계급</th>
+                  <th className="border px-4 py-2 text-center">안장일</th>
+                  <th className="border px-4 py-2 text-center">안장 위치</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((row, index) => (
+                  <tr
+                    key={index}
+                    className={`cursor-pointer ${
+                      selectedRowIndex === index
+                        ? "bg-blue-200"
+                        : "hover:bg-gray-300"
+                    }`}
+                    onClick={() => handleRowClick(index, row.dvs)}
+                  >
+                    <td className="border px-4 py-2 text-center">{row.dvs}</td>
+                    <td className="border px-4 py-2 text-center">{row.stmt}</td>
+                    <td className="border px-4 py-2 text-center">{row.mildsc}</td>
+                    <td className="border px-4 py-2 text-center">{row.rank}</td>
+                    <td className="border px-4 py-2 text-center">{row.buraldate}</td>
+                    <td className="border px-4 py-2 text-center">{row.buralpstn}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {currentItems.length > 0 ? (
-                    currentItems.map((row, index) => (
-                      <tr
-                        key={index}
-                        className={`hover:bg-gray-100 ${
-                          index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                        }`}
-                      >
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.seq}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.dvs}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.stmt}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.mildsc}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.rank}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.dthdt}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.buraldate}</td>
-                        <td className="border border-gray-300 px-4 py-2 text-center">{row.buralpstn}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td
-                        colSpan="8"
-                        className="border border-gray-300 px-4 py-2 text-center text-gray-500"
-                      >
-                        데이터가 없습니다.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
 
             {/* 페이지네이션 */}
-            <div className="flex justify-center items-center mt-6">
+            <div className="flex justify-center items-center mt-4 space-x-1">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 border rounded ${
+                className={`px-3 py-1 border rounded ${
                   currentPage === 1
-                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-white hover:bg-gray-100"
                 }`}
               >
-                {"<"}
+                이전
               </button>
               {getPageNumbers().map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 border rounded mx-1 ${
+                  className={`px-3 py-1 border rounded ${
                     currentPage === page
                       ? "bg-blue-500 text-white"
                       : "bg-white hover:bg-gray-100"
@@ -264,19 +304,47 @@ const NationalMemorialMap = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 border rounded ${
+                className={`px-3 py-1 border rounded ${
                   currentPage === totalPages
-                    ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-white hover:bg-gray-100"
                 }`}
               >
-                {">"}
+                다음
               </button>
             </div>
           </>
         )}
       </div>
 
+      {/* 현충원 지도 보기 이미지 모달 */}
+      {isMapModalOpen && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+          onClick={toggleMapModal} // 배경 클릭 시 모달 닫기
+        >
+          <div
+            className="bg-white rounded-lg shadow-lg max-w-7xl w-full p-6 relative"
+            onClick={(e) => e.stopPropagation()} // 이벤트 전파 차단
+          >
+            <button
+              onClick={toggleMapModal}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+            >
+              ✖
+            </button>
+            <h2 className="text-xl font-bold mb-4 text-center">서울국립현충원 지도</h2>
+            <div className="flex justify-center">
+              <img
+                src="/img/cemetaryMap.png" // 여기에 실제 이미지 경로를 설정
+                alt="서울국립현충원 지도"
+                className="rounded-lg border shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -179,7 +179,7 @@ const MainPage = () => {
        </section>
 
       {/* Section: Ads */}
-      <section className="py-8 px-4 bg-white" data-aos="fade-up">
+      <section className=" py-8 px-4 bg-white" data-aos="fade-up">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
          <div

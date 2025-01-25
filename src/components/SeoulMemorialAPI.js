@@ -67,7 +67,7 @@ const SeoulMemorialAPI = () => {
 
   return (
     <div
-      className="flex items-center justify-center mx-auto mt-40 p-4"
+      className="flex items-center justify-center mx-auto  p-4"
       style={{
         backgroundImage: "url('/img/cemetary.png')",
         backgroundSize: "cover",

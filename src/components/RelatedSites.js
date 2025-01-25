@@ -50,7 +50,7 @@ const RelatedSites = () => {
   ];
 
   return (
-    <section className="py-8 px-4 bg-white">
+    <section className="container py-8 px-4 mt-20 mx-auto bg-white">
       <h2 className="text-2xl font-semibold text-center mb-8">자주 찾는 사이트</h2>
       <p className="text-lg font-medium text-center mb-8">
         국방부 산하 및 공공기관 사이트입니다. 로고를 클릭하면 해당 사이트로 이동합니다.
@@ -62,7 +62,7 @@ const RelatedSites = () => {
             href={site.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative block w-full h-32 rounded-md shadow-md hover:shadow-lg transition flex items-center justify-center"
+            className="relative block w-full h-32 rounded-md  shadow-md hover:shadow-lg transition flex items-center justify-center"
             aria-label={site.name}
           >
             {site.logo ? (
