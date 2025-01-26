@@ -221,10 +221,7 @@ const Excavation = () => {
           </p>
         </div>
       )}
-      <div
-        ref={totalsSectionRef}
-        className="w-full bg-gray-100 py-12"
-      >
+      <div ref={totalsSectionRef} className="w-full bg-gray-100 py-12">
         <div className="max-w-[100rem] mx-auto">
           <h1 className="text-center text-3xl font-extrabold text-gray-800 mb-4">
             전사자 유해 발굴 현황

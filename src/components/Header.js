@@ -23,12 +23,12 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full fixed top-0 z-50  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-black"}`}
+      className={`w-full fixed top-0 z-50  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"}`}
     >
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* 로고 부분 */}
         <div className="flex items-center">
-          <img src="/path/to/logo.png" alt="Logo" className="h-8" />
+          <img src="/img/koreaflag.png" alt="Logo" className="h-10" />
         </div>
 
         {/* 메뉴바 */}

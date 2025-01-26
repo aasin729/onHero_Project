@@ -24,8 +24,7 @@ const MainPage = () => {
 
       {/* Hero Section (Video Background) */}
       <div
-        className="relative flex items-center justify-center min-h-screen mb-20 pt-16"
-        data-aos="fade"
+        className="relative flex items-center justify-center min-h-screen pt-16"
       >
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -39,87 +38,137 @@ const MainPage = () => {
       </div>
 
       {/* Section: 한국전쟁 정보 */}
-      <section className="py-8 px-4 bg-white" data-aos="fade-up">
-        <div className="max-w-screen-xl mx-auto">
-          <h2 className="text-3xl font-semibold text-center mb-8">한국전쟁 (6.25 전쟁)</h2>
-          <p className="text-gray-500 text-center text-xl font-semibold mb-20">
-            1950년 6월 25일 새벽에 북한 공산군이 남북군사분계선이던 38선 전역에 걸쳐 불법 남침함으로써 일어난 한반도에서의 전쟁
-          </p>
-
-          
-{/* Circle Grid Section */}
-<div className="flex justify-center items-center mb-40">
-  <div className="grid grid-cols-3 gap-8">
-    {[
-      "남한 공산화를 위한 침략 전쟁",
-      "북한의 치밀한 사전준비에 의한 계획된 전쟁",
-      "민족간의 이념 갈등에 의한 동족상잔의 전쟁",
-      "UN연합군이 본격적으로 개입한 최초의 전쟁",
-      "냉전시대의 개막을 알린 첫 번째 전면전",
-      "미·소 양강대국의 국가이익이 충돌된 국제 대리전",
-    ].map((text, index) => (
-      <div
-        key={index}
-        className="flex items-center justify-center w-60 h-60 rounded-full shadow-lg text-center transition-transform duration-300 transform hover:scale-105 bg-gradient-to-r from-gray-400 to-gray-700"
-        data-aos="fade-up"
-        data-aos-delay={`${index * 100}`}
-      >
-        <span className="px-4 text-white font-semibold text-lg leading-relaxed drop-shadow-lg">
-          {index + 1}. {text}
-        </span>
-      </div>
-    ))}
-  </div>
-</div>
-
-
-
-
-          {/* Image and Text Section */}
-          <div
-            className="flex flex-col md:flex-row items-center gap-6 mb-20"
-            data-aos="fade-right"
-          >
-               <div className="bg-gray-300 h-80 w-full md:w-1/2 rounded-lg flex items-center justify-center">
-              <iframe
-                className="w-full h-full rounded-lg"
-                src="https://www.youtube.com/embed/MmsB7vMcjzk?si=ckJw23N8M2VgZfvo"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <p className="text-gray-700 text-lg leading-loose md:w-1/2">
-              6·25 전쟁은 1950년 6월 25일 북한군의 기습남침으로 시작되어 1953년 7월 27일 휴전이 성립되기까지 약 3년 1개월 2일간 계속되었다.
-              기간 중 한반도는 38도선을 각각 3회씩이나 넘나드는 낙동강에서 압록강까지 오르내렸으며, 이로 인한 사상 북측에 145만 명의
-              사상자를 포함해 항공기부터 탱크 1,756대의 파괴로 전 국토의 80%가 초토화되었다.
+      <section className="py-20 px-6 bg-gray-200">
+      <div className="max-w-screen-xl mx-auto">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row items-center gap-6"  data-aos="fade">
+          <div className="md:w-1/2 text-center md:text-left">
+            <h2 className="text-3xl font-bold mb-10">한국전쟁 (6.25 전쟁)</h2>
+            <p className="text-gray-800 text-lg  mb-4">
+              6.25전쟁은 1950년 6월 25일 북한군의 기습 남침으로 시작된 한반도의 비극적인 전쟁으로, 남북한 간의 이념 갈등과 냉전 시대의 국제적 대리전 성격을 띠고 있었습니다. 약 3년간 진행되며 한반도는 38선을 중심으로 치열한 공방전이 이어졌고, UN군과 중공군이 개입하며 국제전으로 확대되었습니다. 이 전쟁은 약 300만 명 이상의 사상자와 난민을 발생시키고, 국토의 80%가 초토화되는 막대한 피해를 남긴 채 1953년 7월 27일 정전협정을 통해 휴전되었습니다.
             </p>
           </div>
-
-          {/* YouTube Video Section */}
-          <div
-            className="flex flex-col md:flex-row items-center gap-6 mb-20"
-            data-aos="fade-left"
-          >
-            <p className="text-gray-700 text-lg leading-loose md:w-1/2">
-              전쟁 결과 한국과 유엔군은 전사 17만 6,000명, 부상 55만 5,000여명, 실종 및 포로 약 4만 2,000명의 인명 피해를 입었고,
-              북한과 중국군은 사망 36만 명, 부상 111만여명, 실종 및 포로 14만 5천명의 피해를 입은 것으로 추정된다. 전국의 61만 가옥과
-              4203개의 학교와 파괴되고 삶의 터전을 잃은 350만 명의 난민과 300만명의 학동생도들이 타향에서 외로움과 가난, 고통 등을
-              유중이 반세기가 지난 지금까지 끝나지 않은 전쟁으로 남아 있다.
-            </p>
-            <div className="bg-gray-300 h-full w-full md:w-1/2 rounded-lg flex items-center justify-center text-gray-700 overflow-hidden">
-              <img
-                src={KoreaWar}
-                alt="6.25 전쟁 관련 이미지"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="md:w-1/2">
+            <iframe
+              className="w-full h-64 md:h-80 rounded-lg"
+              src="https://www.youtube.com/embed/MmsB7vMcjzk"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
-      </section>
 
-      {/* Section: Poem */}
+        {/* Info Cards Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20"  data-aos="fade">
+            {[
+              {
+                number: '01',
+                title: '남한 공산화 침략',
+                description: '북한이 남한을 공산화하기 위해 벌인 전면적 군사 침략.',
+              },
+              {
+                number: '02',
+                title: '치밀한 사전 준비',
+                description: '북한이 계획적으로 준비한 철저한 군사적 공격.',
+              },
+              {
+                number: '03',
+                title: '동족상잔의 비극',
+                description: '같은 민족 간 이념 갈등으로 인해 벌어진 비극적인 전쟁.',
+              },
+              {
+                number: '04',
+                title: 'UN 최초 개입',
+                description: 'UN군이 군사적으로 개입한 첫 국제 분쟁.',
+              },
+              {
+                number: '05',
+                title: '냉전의 시작',
+                description: '냉전 체제 아래 벌어진 첫 번째 대규모 전면전.',
+              },
+              {
+                number: '06',
+                title: '강대국 대리전',
+                description: '미국과 소련의 이익 충돌로 벌어진 국제적 대리전.',
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center transition-transform transform hover:scale-105"
+              >
+                {/* 번호 */}
+                <div className="text-blue-800 text-2xl font-bold mb-4">{item.number}</div>
+                {/* 타이틀 */}
+                <h3 className="text-xl font-bold mb-2 text-gray-800">{item.title}</h3>
+                {/* 내용 */}
+                <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+              </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+
+    {/* Section: Ads */}
+    <section className="py-20 px-4 container mx-auto bg-white" data-aos="fade">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+        <div
+          className="p-4 bg-red-100 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300  hover:border-blue-900 cursor-pointer"
+          style={{
+            backgroundImage: "url('/img/banner1.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <p className="text-gray-600 text-lg font-bold mb-4 mt-20 text-left">
+            참전용사와 그 가족의 안녕을 위해
+            <br />
+            국가공헌협회와 함께해주세요.
+          </p>
+          <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+            기부하기
+          </button>
+        </div>
+        
+        <div className="flex items-center p-4 rounded-lg shadow-md h-60 border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer">
+          <div className="flex-1 text-left">
+            <p className="text-gray-600 text-lg font-bold mb-4">
+              영웅의 귀환을
+              <br />
+              DNA로 함께 밝혀요!
+              <br />
+              여러분의 관심과 참여가<br /> 필요합니다!
+              <br />
+              <strong className="text-blue-700 text-3xl font-bold">1577-5625</strong>
+            </p>
+          </div>
+          <div className="flex-shrink-0 w-1/2">
+            <img
+              src="/img/DNAbanner.jpg"
+              alt="DNA Banner"
+              className="h-full w-full object-cover rounded-lg"
+            />
+          </div>
+        </div>
+        
+        <div
+          className="p-4 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+          style={{
+            backgroundImage: "url('/img/banner2.png')",
+            backgroundSize: "100%",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
+    
+      </div>
+    </section>
+        
+    {/* Section: Poem */}
       <section
          className="text-center relative overflow-hidden"
          style={{
@@ -129,7 +178,7 @@ const MainPage = () => {
            backgroundRepeat: "no-repeat",
            backgroundAttachment: "fixed",
            color: "white",
-           minHeight: "500px",
+           minHeight: "400px",
            display: "flex",
            alignItems: "center",
            justifyContent: "center",
@@ -178,49 +227,6 @@ const MainPage = () => {
          </style>
        </section>
 
-      {/* Section: Ads */}
-      <section className=" py-8 px-4 bg-white" data-aos="fade-up">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-         <div
-            className="p-4 bg-red-100 rounded-lg shadow-md h-60 text-center"
-            style={{
-              backgroundImage: "url('/img/banner1.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <p className="text-gray-800 mb-4 mt-20 text-left">
-              지금, 참전용사와 그 가족의 안녕을 위해
-              <br />
-              국가보훈처와 함께해주세요
-            </p>
-            <button className="bg-red-500 text-white  px-4 py-2 rounded-md">
-              후원하기
-            </button>
-          </div>
-
-
-          <div className="p-4 bg-green-100 rounded-lg shadow-md text-center">
-            <p className="text-gray-800 mb-4">
-              영웅의 귀환을
-              <br />
-              DNA로 함께 밝혀요!
-            </p>
-            <p className="font-bold text-lg">1577-5625</p>
-          </div>
-          <div className="p-4 bg-blue-100 rounded-lg shadow-md text-center">
-            <p className="text-gray-800 mb-4">
-              6.25 전사자 유해 찾기 프로젝트
-              <br />
-              유전자 시료채취 참여 안내
-            </p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-              자세히 보기
-            </button>
-          </div>
-        </div>
-      </section>
 
       {/* Related Sites Section */}
       <RelatedSites data-aos="fade" />

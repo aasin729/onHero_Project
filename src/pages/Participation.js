@@ -167,7 +167,7 @@ const Participation = () => {
   });
   
   const chartTitles = {
-    personnel: "참전 총인원 비율",
+    personnel: "총 인원 비율",
     deaths: "전사 비율",
     injuries: "부상 비율",
     missing: "실종 비율",
@@ -272,33 +272,33 @@ const Participation = () => {
       <div ref={totalsSectionRef} className="w-full bg-white text-black flex flex-col items-center justify-center py-20 border-t border-gray-300">
         <h2 className="text-3xl font-bold mb-20">UN군 총 참전 현황</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 text-center">
-          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
-            <p className="text-xl font-semibold mb-8">참전 총인원</p>
-            <p className="text-4xl font-bold min-w-[6em] text-center">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl text-gray-400 font-semibold mb-8">참전 총인원</p>
+            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
               {animatedValues.personnel.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
-            <p className="text-xl font-semibold mb-8">전사 총인원</p>
-            <p className="text-4xl font-bold min-w-[6em] text-center">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl text-gray-400 font-semibold mb-8">전사 총인원</p>
+            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
               {animatedValues.deaths.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
-            <p className="text-xl font-semibold mb-8">부상 총인원</p>
-            <p className="text-4xl font-bold min-w-[6em] text-center">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl text-gray-400 font-semibold mb-8">부상 총인원</p>
+            <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.injuries.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
-            <p className="text-xl font-semibold mb-8">실종 총인원</p>
-            <p className="text-4xl font-bold min-w-[6em] text-center">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl text-gray-400 font-semibold mb-8">실종 총인원</p>
+            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
               {animatedValues.missing.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-200 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
-            <p className="text-xl font-semibold mb-8">포로 총인원</p>
-            <p className="text-4xl font-bold min-w-[6em] text-center">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+            <p className="text-xl text-gray-400 font-semibold mb-8">포로 총인원</p>
+            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
               {animatedValues.prisoners.toLocaleString()}명
             </p>
           </div>
@@ -306,9 +306,10 @@ const Participation = () => {
       </div>
 
         {/* 차트부분 */}
-      <div className="w-full bg-gray-700 text-white py-10">
-        <h2 className="text-2xl text-center font-bold mb-4">국가별 비율 차트</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-4/5 mx-auto">
+      <div className="w-full bg-gray-400 py-20">
+        <h2 className="text-3xl text-center font-bold mb-4">국가별 비율 차트 (상위 5개국가)</h2>
+        <p className="text-lg text-center text-gray-700 font-semibold mb-8">* 상위 5개 국가까지만 차트에 표시됩니다.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-4/6 mx-auto">
           {Object.keys(chartTitles).map((key) => (
             <div key={key} className="bg-white p-4 shadow-md rounded-lg">
               <h3 className="text-lg font-semibold text-center mb-4 text-black">
@@ -327,16 +328,45 @@ const Participation = () => {
       </div>
 
       {/* 콘텐츠 3 */}
-      <div className="w-full bg-blue-400 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <p className="text-gray-700 text-center md:text-left">
-           <h2 className="text-2xl font-semibold text-center mb-4">턴 투어드 부산</h2>
-           유엔참전용사 국제추모의 날(UN Veterans International Memorial Day)은 매년 11월 11일에 6.25전쟁에 참전하여 
-           대한민국의 자유민주주의를 수호한 유엔참전용사의 희생과 공헌을 기념하고, 이들을 유엔참전국과 함께 추모하기 위한 대한민국의 기념일이다.
-          </p>
-          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
-        </div>
+      <div className="w-full bg-blue-400 text-white flex flex-col md:flex-row items-center justify-center" style={{ height: "500px" }}>
+          {/* 왼쪽 섹션: 문구 */}
+          <div className="flex-1 flex flex-col items-center justify-center p-4">
+            <h2 className="text-3xl font-bold mb-4">유엔참전용사 국제추모의 날</h2>
+            <h3 className="text-4xl font-extrabold mb-6">Turn Toward Busan</h3>
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">
+                11
+              </div>
+              <span className="text-3xl font-bold">월</span>
+              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">
+                11
+              </div>
+              <span className="text-3xl font-bold">일</span>
+              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">
+                11
+              </div>
+              <span className="text-3xl font-bold">시</span>
+            </div>
+            <p className="text-center text-sm md:text-base px-4">
+              6·25전쟁에서 대한민국의 자유와 평화를 위해 헌신한 유엔참전용사를 기억하기 위해<br />
+              매년 11월 11시 부산을 향하여 1분간 묵념하는 추모식을 거행합니다.
+            </p>
+          </div>
+
+           {/* 오른쪽 섹션: 유튜브 영상 */}
+          <div className="flex-1 flex items-center justify-center p-4">
+            <iframe
+              className="w-full max-w-md aspect-video"
+              src="https://www.youtube.com/embed/qJPQLl6npMs?si=lHwIfeOHw-k5O_A3"
+              title="YouTube video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>  
       </div>
+
+
 
     {/* Footer */}
      <Footer />

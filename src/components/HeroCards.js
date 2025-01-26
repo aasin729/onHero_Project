@@ -61,22 +61,33 @@ const Modal = ({ isOpen, onClose, content }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
+      {/* 반투명 배경 */}
       <div
-        className="fixed inset-0 bg-black opacity-50"
+        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
         onClick={onClose}
       ></div>
-      <div className="bg-white p-6 rounded-lg shadow-lg z-10 max-w-4xl w-full">
-        <h3 className="text-xl font-bold mb-4">상세 내용</h3>
+
+      {/* 모달 창 */}
+      <div className="relative bg-white p-6 rounded-2xl shadow-2xl z-10 max-w-4xl w-full animate-fade-in scale-95 transition-transform duration-300 transform">
+     
+        {/* 모달 내용 */}
+        <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          상세 내용
+        </h3>
         <div
-          className="mb-4"
+          className="text-gray-600 text-base font-semibold  leading-relaxed max-h-96 overflow-y-auto px-2"
           dangerouslySetInnerHTML={{ __html: content }}
         ></div>
-        <button
-          onClick={onClose}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          닫기
-        </button>
+
+        {/* 하단 버튼 */}
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          >
+            닫기
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -120,8 +131,6 @@ const HeroCards = () => {
     setFilteredHeroes(filtered.length > 0 ? filtered : []);
     setCurrentPage(1);
   };
-  
-  
 
   // 군별 필터링 상태 변경 시 자동 필터링
   useEffect(() => {
@@ -151,42 +160,43 @@ const HeroCards = () => {
   };
 
   return (
-    <div className="bg-gray-400 min-h-[calc(80vh)]  p-10 mt-40">
-      {/* 검색 필드 */}
-      <div className="flex justify-end mb-4">
-      <p>군별선택</p>
-      <select
-          value={armyType}
-          onChange={(e) => setArmyType(e.target.value)}
-          className="px-4 py-2 mr-4 border rounded-lg ml-2"
-        >
-          <option value="">전체보기</option>
-          <option value="육군">육군</option>
-          <option value="해군">해군</option>
-          <option value="해병대">해병대</option>
-          <option value="공군">공군</option>
-          <option value="경찰">경찰</option>
-        </select>
+  <div className="bg-gray-400 min-h-[calc(80vh)]  p-10 mt-20">
+    <div className="flex items-center justify-between mb-10">
+        {/* 왼쪽 제목 */}
+        <h2 className="text-3xl mt-10 font-bold">
+          한국전쟁 호국선열 목록
+        </h2>
 
-        <input
-          type="text"
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          placeholder="이름을 입력하세요"
-          className="px-4 py-2 border rounded-lg mr-2"
-        />
-        <button
-          onClick={handleSearch}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          조회
-        </button>
-       
+        {/* 오른쪽 검색 필드 */}
+        <div className="flex items-center">
+          <input
+            type="text"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            placeholder="이름을 입력하세요"
+            className="px-4 py-2 border rounded-lg mr-2"
+          />
+          <button
+            onClick={handleSearch}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            조회
+          </button>
+          <select
+            value={armyType}
+            onChange={(e) => setArmyType(e.target.value)}
+            className="px-4 py-2 border rounded-lg ml-2 cursor-pointer"
+          >
+            <option value="">군별 전체</option>
+            <option value="육군">육군</option>
+            <option value="해군">해군</option>
+            <option value="해병대">해병대</option>
+            <option value="공군">공군</option>
+            <option value="경찰">경찰</option>
+          </select>
+        </div>
       </div>
 
-      <h2 className="text-2xl font-bold text-center mb-6">
-        한국전쟁 호국선열 목록
-      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {visibleHeroes.map((hero, index) => (
           <div
