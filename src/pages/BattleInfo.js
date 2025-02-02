@@ -1,16 +1,40 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DOMPurify from "dompurify";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import HeroCards from "../components/HeroCards";
 import Footer from "../components/footer";
 
 const BattleInfo = () => {
+   useEffect(() => {
+      // AOS 초기화
+      AOS.init({
+        duration: 800, // 애니메이션 지속 시간
+        once: false, // 애니메이션 반복 실행
+        easing: "ease-in-out", // 애니메이션 효과
+        offset: 50, // 애니메이션 시작 지점
+      });
+    }, []);
   const [battleData, setBattleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(5); // 초기에 표시할 그룹 수
-  const [selectedBattle, setSelectedBattle] = useState(null); // 선택된 전투 정보
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [visibleCount, setVisibleCount] = useState(3);
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+
+  // 🔥 배경 이미지 리스트
+  const backgrounds = [
+    "/img/1.jpg",
+    "/img/2.jpg",
+    "/img/3.jpg",
+    "/img/4.jpg",
+    "/img/5.jpg",
+  ];
+
+  useEffect(() => {
+    fetchBattleInfo();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const fetchBattleInfo = async () => {
     setLoading(true);
@@ -41,7 +65,8 @@ const BattleInfo = () => {
           return item;
         })
         .filter((item) => item.parsedDate)
-        .sort((a, b) => b.parsedDate - a.parsedDate);
+        // .sort((a, b) => b.parsedDate - a.parsedDate);
+        .sort((a, b) => a.parsedDate - b.parsedDate);
 
       const groupedData = groupByDate(filteredData);
       setBattleData(groupedData);
@@ -72,65 +97,56 @@ const BattleInfo = () => {
     }, {});
   };
 
-  useEffect(() => {
-    fetchBattleInfo();
-  }, []);
+  // 🔥 스크롤 이벤트 핸들러: 타임라인이 스크롤될 때 배경 변경
+  const handleScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight * 0.8) {
+      setVisibleCount((prev) => prev + 3);
+    }
 
-  const handleShowMore = () => {
-    setVisibleCount((prevCount) => prevCount + 5); // 한 번에 5개씩 더 보기
+    // 🔄 스크롤 위치에 따라 배경 이미지 변경
+    const scrollPosition = Math.floor(window.scrollY / 1000); // 1000px 단위로 변경
+    const newIndex = scrollPosition % backgrounds.length; // 순환하도록 설정
+    setCurrentBackgroundIndex(newIndex);
   };
-
-  const handleReset = () => {
-    setVisibleCount(5); // visibleCount를 초기값으로 리셋
-  };
-
-  const openModal = (battle) => {
-    setSelectedBattle(battle);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setSelectedBattle(null);
-    setIsModalOpen(false);
-  };
-
-  const filterContent = (content) => {
-    const lines = content.split("\n");
-    const filteredLines = lines.filter((line) => !line.trim().startsWith("3."));
-    return filteredLines.join("\n");
-  };
-
-  if (loading) return <p className="text-center mt-10">로딩 중...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
-
-  const visibleData = Object.keys(battleData).slice(0, visibleCount);
 
   return (
     <>
-      <HeroCards />
-
-       {/* 콘텐츠 3 */}
-       <div className="w-full bg-blue-300 text-white flex items-center justify-center z-0" style={{ height: "300px" }}>
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <p className="text-gray-700 text-center md:text-left">
-           <h2 className="text-2xl font-semibold text-center mb-4">콘텐츠</h2>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer too.
-          </p>
-          <div className="w-full md:w-1/2 h-48 bg-gray-300 rounded-lg"></div>
-        </div>
+      {/* 🔥 유튜브 동영상 자동 실행 */}
+      <div className="relative w-full mt-20" style={{ height: "90vh" }}>
+        <iframe
+          className="absolute top-0 left-0 w-full h-full"
+          src="https://www.youtube.com/embed/Dbrn-bDeJJ0?autoplay=1&mute=1&controls=1&loop=1&playlist=Dbrn-bDeJJ0"
+          title="전투 역사 영상"
+          frameBorder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
 
-      <div className="app-wrapper bg-gray-900 text-white p-10">
-        <h1 className="text-3xl font-bold mb-10 text-center">전투 정보 타임라인</h1>
+      {/* HeroCards */}
+      <HeroCards />
+
+      {/* 🔥 타임라인 배경을 동적으로 변경 */}
+      <div
+        id="timeline-section"
+        className="app-wrapper bg-gray-600 text-white p-10 transition-all duration-700"
+        style={{
+          backgroundImage: `url(${backgrounds[currentBackgroundIndex]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed", // 배경 고정 효과 추가
+        }}
+      >
+        {/* <h1 className="text-4xl text-gray-100 font-bold text-center mb-20">전투 정보 타임라인</h1> */}
+
+        {loading && <p className="text-center mt-10">로딩 중...</p>}
+        {error && <p className="text-center mt-10 text-red-500">{error}</p>}
 
         {/* 타임라인 */}
-        <div className="relative px-20">
-          {/* 중앙 라인 */}
+        <div className="relative px-20" data-aos="fade">
           <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300"></div>
 
-          {visibleData.map((dateKey, index) => {
+          {Object.keys(battleData).slice(0, visibleCount).map((dateKey, index) => {
             const group = battleData[dateKey];
             const isLeft = index % 2 === 0;
             return (
@@ -140,31 +156,19 @@ const BattleInfo = () => {
                   isLeft ? "justify-start" : "justify-end"
                 }`}
               >
-                {/* 전투 정보 카드 */}
                 <div
                   className={`relative w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
-                    isLeft ? "ml-10 text-center" : "mr-10 text-center"
+                    isLeft ? "ml-10" : "mr-10"
                   }`}
                 >
-                  {/* 아이콘 */}
-                  <div
-                    className={`absolute w-6 h-6 bg-pink-500 rounded-full top-1/2 transform -translate-y-1/2 ${
-                      isLeft ? "-left-3" : "-right-3"
-                    }`}
-                  ></div>
-
-                  <p className="text-pink-400 font-semibold mb-2">{dateKey}</p>
+                  <p className="text-gray-400 font-semibold text-xl mb-2">{dateKey}</p>
                   {group.battles.map((battle, i) => (
-                    <div
-                      key={i}
-                      className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md transition-opacity duration-300 hover:opacity-75 cursor-pointer"
-                      onClick={() => openModal(battle)}
-                    >
-                      <h3 className="text-lg font-bold">{battle.title}</h3>
-                      <p className="text-sm mt-1">
+                    <div key={i} className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md cursor-pointer">
+                      <h3 className="text-xl font-bold">{battle.title}</h3>
+                      <p className="text-lg mt-1">
                         <strong>전투 지역:</strong> {battle.region}
                       </p>
-                      <p className="text-sm">
+                      <p className="text-base">
                         <strong>주요 인물:</strong> {battle.person}
                       </p>
                     </div>
@@ -174,59 +178,9 @@ const BattleInfo = () => {
             );
           })}
         </div>
-
-        {/* 버튼 영역 */}
-        <div className="text-center mt-10">
-          {visibleCount < Object.keys(battleData).length && (
-            <button
-              onClick={handleShowMore}
-              className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors mr-4"
-            >
-              더 보기
-            </button>
-          )}
-          <button
-            onClick={handleReset}
-            className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          >
-            다시 올리기
-          </button>
-        </div>
-
-        {/* 모달 */}
-        {isModalOpen && selectedBattle && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-            <div className="bg-white text-black p-6 rounded-lg w-1/2 max-h-[80vh] overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-4">{selectedBattle.title}</h2>
-              <p className="text-sm mb-4">
-                <strong>전투 지역:</strong> {selectedBattle.region}
-              </p>
-              <p className="text-sm mb-4">
-                <strong>주요 인물:</strong> {selectedBattle.person}
-              </p>
-              <p className="text-sm">
-                <strong>전투 내용:</strong>
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(filterContent(selectedBattle.content)),
-                  }}
-                  className="block mt-2"
-                />
-              </p>
-              <div className="text-right mt-6">
-                <button
-                  onClick={closeModal}
-                  className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
-                >
-                  닫기
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-      {/* Footer */}
-     <Footer />
+
+      <Footer />
     </>
   );
 };

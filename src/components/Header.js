@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full fixed top-0 z-50  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"}`}
+      className={`w-full fixed top-0 z-50 font-bold  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"}`}
     >
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* 로고 부분 */}

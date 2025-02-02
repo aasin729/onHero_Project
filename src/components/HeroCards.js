@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import warheroes from "../data/warheroes.json";
 import privateImg from "../assets/images/private.png";
 import privateFirstClassImg from "../assets/images/private_first_class.png";
@@ -94,6 +96,16 @@ const Modal = ({ isOpen, onClose, content }) => {
 };
 
 const HeroCards = () => {
+    useEffect(() => {
+      // AOS 초기화
+      AOS.init({
+        duration: 800, // 애니메이션 지속 시간
+        once: false, // 애니메이션 반복 실행
+        easing: "ease-in-out", // 애니메이션 효과
+        offset: 50, // 애니메이션 시작 지점
+      });
+    }, []);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [armyType, setArmyType] = useState(""); // 군별 필터링 상태
@@ -160,10 +172,10 @@ const HeroCards = () => {
   };
 
   return (
-  <div className="bg-gray-400 min-h-[calc(80vh)]  p-10 mt-20">
-    <div className="flex items-center justify-between mb-10">
+  <div className="bg-gray-300 min-h-[calc(80vh)]  p-10 " >
+    <div className="flex items-center justify-between mb-10" data-aos="fade" >
         {/* 왼쪽 제목 */}
-        <h2 className="text-3xl mt-10 font-bold">
+        <h2 className="text-3xl mt-10 text-gray-900 font-bold">
           한국전쟁 호국선열 목록
         </h2>
 
@@ -174,18 +186,18 @@ const HeroCards = () => {
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="이름을 입력하세요"
-            className="px-4 py-2 border rounded-lg mr-2"
+            className="px-4 h-12 w-64 py-2 border rounded-lg mr-2"
           />
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            className="px-4 py-2 w-28 h-12 bg-blue-900 text-white rounded-lg hover:bg-blue-800"
           >
             조회
           </button>
           <select
             value={armyType}
             onChange={(e) => setArmyType(e.target.value)}
-            className="px-4 py-2 border rounded-lg ml-2 cursor-pointer"
+            className="px-4 py-2 h-12 border rounded-lg ml-2 cursor-pointer"
           >
             <option value="">군별 전체</option>
             <option value="육군">육군</option>
@@ -196,41 +208,43 @@ const HeroCards = () => {
           </select>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        {visibleHeroes.map((hero, index) => (
-          <div
-            key={index}
-            className="p-4 bg-white rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer flex items-center"
-            onClick={() => handleCardClick(hero.content)}
-          >
-            <div className="flex-1">
-              <h3 className="text-lg font-bold">{hero.title}</h3>
-              <p>
-                <strong>한문 이름:</strong> {hero.hanName}
-              </p>
-              <p>
-                <strong>날짜:</strong> {hero.date}
-              </p>
-              <p>
-                <strong>지역:</strong> {hero.location}
-              </p>
-              <p>
-                <strong>계급:</strong> {hero.rank}
-              </p>
-              <p>
-                <strong>상훈:</strong> {hero.medal} 
-              </p>
+      {/* 카드 섹션 (컨테이너 박스) */}
+      <div className="bg-gray-100 p-10 rounded-xl shadow-md">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6" data-aos="fade" >
+          {visibleHeroes.map((hero, index) => (
+            <div
+              key={index}
+              className="p-4 bg-white rounded-lg shadow-xl hover:scale-105 transition-transform cursor-pointer flex items-center"
+              onClick={() => handleCardClick(hero.content)}
+            >
+              <div className="flex-1">
+                <h3 className="text-lg font-bold">{hero.title}</h3>
+                <p>
+                  <strong>한문 이름:</strong> {hero.hanName}
+                </p>
+                <p>
+                  <strong>날짜:</strong> {hero.date}
+                </p>
+                <p>
+                  <strong>지역:</strong> {hero.location}
+                </p>
+                <p>
+                  <strong>계급:</strong> {hero.rank}
+                </p>
+                <p>
+                  <strong>상훈:</strong> {hero.medal} 
+                </p>
+              </div>
+              <div className="flex-shrink-0 ml-4">
+                <img
+                  src={getRankImage(hero.rank)}
+                  alt={`${hero.rank} 이미지`}
+                  className="w-auto h-auto max-w-16 max-h-16"
+                />
+              </div>
             </div>
-            <div className="flex-shrink-0 ml-4">
-              <img
-                src={getRankImage(hero.rank)}
-                alt={`${hero.rank} 이미지`}
-                className="w-auto h-auto max-w-16 max-h-16"
-              />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <div className="flex justify-center items-center mt-6 space-x-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (

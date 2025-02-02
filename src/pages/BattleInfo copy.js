@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import DOMPurify from "dompurify";
+import HeroCards from "../components/HeroCards";
+import Footer from "../components/footer";
 
 const BattleInfo = () => {
   const [battleData, setBattleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visibleCount, setVisibleCount] = useState(5); // 초기에 표시할 그룹 수
+  const [selectedBattle, setSelectedBattle] = useState(null); // 선택된 전투 정보
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
   const fetchBattleInfo = async () => {
     setLoading(true);
@@ -36,7 +41,9 @@ const BattleInfo = () => {
           return item;
         })
         .filter((item) => item.parsedDate)
-        .sort((a, b) => b.parsedDate - a.parsedDate);
+        .sort((a, b) => b.parsedDate - a.parsedDate); // 내림차순 정렬
+        // .sort((a, b) => a.parsedDate - b.parsedDate); // 오름차순 정렬
+
 
       const groupedData = groupByDate(filteredData);
       setBattleData(groupedData);
@@ -61,6 +68,7 @@ const BattleInfo = () => {
         title: item.title || "제목 없음",
         region: item.addtn_itm_3 || "정보 없음",
         person: item.addtn_itm_4 || "정보 없음",
+        content: item.ctnt || "내용 없음",
       });
       return acc;
     }, {});
@@ -70,64 +78,71 @@ const BattleInfo = () => {
     fetchBattleInfo();
   }, []);
 
-  const handleShowMore = () => {
-    setVisibleCount((prevCount) => prevCount + 5); // 한 번에 5개씩 더 보기
-  };
-
-  if (loading) return <p className="text-center mt-10">로딩 중...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
-
-  // 표시할 데이터만 잘라서 보여줌
-  const visibleData = Object.keys(battleData).slice(0, visibleCount);
-
   return (
-    <div className="app-wrapper mt-20 bg-gray-900 text-white p-10">
-      <h1 className="text-3xl font-bold mb-10 text-center">전투 정보 타임라인</h1>
-      <div className="relative">
-        {visibleData.map((dateKey, index) => {
-          const group = battleData[dateKey];
-          const isLeft = index % 2 === 0; // 홀수/짝수에 따라 좌/우 변경
+    <>
+      {/* 🔥 유튜브 동영상 자동 실행 */}
+      <div className="relative w-full mt-20" style={{ height: "90vh" }}>
+  <iframe
+    className="absolute top-0 left-0 w-full h-full"
+    src="https://www.youtube.com/embed/Dbrn-bDeJJ0?autoplay=1&mute=1&controls=1&loop=1&playlist=Dbrn-bDeJJ0"
+    title="전투 역사 영상"
+    frameBorder="0"
+    allow="autoplay; encrypted-media; picture-in-picture"
+    allowFullScreen
+  ></iframe>
+</div>
 
-          return (
-            <div key={index} className={`flex ${isLeft ? "justify-start" : "justify-end"} mb-10`}>
+
+
+      {/* HeroCards */}
+      <HeroCards />
+
+      <div className="app-wrapper bg-gray-600 text-white p-10">
+        <h1 className="text-3xl text-gray-900 font-bold mb-20">전투 정보 타임라인</h1>
+
+        {loading && <p className="text-center mt-10">로딩 중...</p>}
+        {error && <p className="text-center mt-10 text-red-500">{error}</p>}
+
+        {/* 타임라인 */}
+        <div className="relative px-20">
+          <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300"></div>
+
+          {Object.keys(battleData).slice(0, visibleCount).map((dateKey, index) => {
+            const group = battleData[dateKey];
+            const isLeft = index % 2 === 0;
+            return (
               <div
-                className={`relative w-1/2 p-6 bg-gray-800 rounded-lg shadow-md ${
-                  isLeft ? "ml-10" : "mr-10"
-                }`}
+                key={index}
+                className={`flex items-center w-3/4 mx-auto mb-10 ${isLeft ? "justify-start" : "justify-end"}`}
               >
-                <div
-                  className={`absolute w-6 h-6 bg-pink-500 rounded-full top-1/2 transform -translate-y-1/2 ${
-                    isLeft ? "-left-3" : "-right-3"
-                  }`}
-                ></div>
-                <p className="text-pink-400 font-semibold mb-2">{dateKey}</p>
-                {group.battles.map((battle, i) => (
-                  <div key={i} className="mt-4">
-                    <h3 className="text-xl font-bold">{battle.title}</h3>
-                    <p className="text-sm mt-1">
-                      <strong>전투 지역:</strong> {battle.region}
-                    </p>
-                    <p className="text-sm">
-                      <strong>주요 인물:</strong> {battle.person}
-                    </p>
-                  </div>
-                ))}
+                <div className={`relative w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${isLeft ? "ml-10" : "mr-10"}`}>
+                  <p className="text-orange-400 font-semibold text-lg mb-2">{dateKey}</p>
+                  {group.battles.map((battle, i) => (
+                    <div key={i} className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md cursor-pointer">
+                      <h3 className="text-lg font-bold">{battle.title}</h3>
+                      <p className="text-sm mt-1"><strong>전투 지역:</strong> {battle.region}</p>
+                      <p className="text-sm"><strong>주요 인물:</strong> {battle.person}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-      {visibleCount < Object.keys(battleData).length && (
+            );
+          })}
+        </div>
+
+        {/* 버튼 영역 */}
         <div className="text-center mt-10">
-          <button
-            onClick={handleShowMore}
-            className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
-          >
+          <button onClick={() => setVisibleCount((prev) => prev + 5)} className="px-6 py-2 bg-orange-500 text-white rounded-lg mr-4">
             더 보기
           </button>
+          <button onClick={() => setVisibleCount(5)} className="px-6 py-2 bg-gray-500 text-white rounded-lg">
+            다시 올리기
+          </button>
         </div>
-      )}
-    </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 

@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const SeoulMemorialAPI = () => {
   const [data, setData] = useState([]); // API 데이터를 저장할 상태
   const [animatedData, setAnimatedData] = useState([]); // 애니메이션 데이터를 저장할 상태
   const [error, setError] = useState(null);
+
+    useEffect(() => {
+      // AOS 초기화
+      AOS.init({
+        duration: 800, // 애니메이션 지속 시간
+        once: false, // 애니메이션 반복 실행
+        easing: "ease-in-out", // 애니메이션 효과
+        offset: 50, // 애니메이션 시작 지점
+      });
+    }, []);
 
   const fetchData = async () => {
     try {
@@ -75,7 +87,7 @@ const SeoulMemorialAPI = () => {
         minHeight: "90vh",
       }}
     >
-      <div className="w-full">
+      <div className="w-full" data-aos="fade">
         <h3 className="text-3xl font-extrabold mb-10 text-center text-gray-700">
           국립서울현충원 안장 현황
         </h3>

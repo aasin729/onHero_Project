@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import Chart from "react-apexcharts";
 import Slider from "react-slick";
 import YoutubeSection from "../components/YoutubeSection";
 import Footer from "../components/footer";
 
 const Excavation = () => {
+
+   useEffect(() => {
+      // AOS 초기화
+      AOS.init({
+        duration: 800, // 애니메이션 지속 시간
+        once: false, // 애니메이션 반복 실행
+        easing: "ease-in-out", // 애니메이션 효과
+        offset: 50, // 애니메이션 시작 지점
+      });
+    }, []);
   const [data, setData] = useState([]);
   const [totals, setTotals] = useState({
     ourfrcs_roka: 0,
@@ -221,12 +233,12 @@ const Excavation = () => {
           </p>
         </div>
       )}
-      <div ref={totalsSectionRef} className="w-full bg-gray-100 py-12">
+      <div ref={totalsSectionRef} className="w-full bg-gray-100 py-12" data-aos="fade">
         <div className="max-w-[100rem] mx-auto">
           <h1 className="text-center text-3xl font-extrabold text-gray-800 mb-4">
             전사자 유해 발굴 현황
           </h1>
-          <p className="text-center text-lg text-gray-600 mb-12">(2000년 ~ 2021년)</p>
+          <p className="text-center text-lg font-semibold text-gray-400 mb-12">(2000년 ~ 2021년)</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {/* 대한민국 국기 */}
@@ -323,7 +335,7 @@ const Excavation = () => {
       </div>
 
       {/* 차트 영역 */}
-      <div className="w-full max-w-[90rem] mx-auto mt-8">
+      <div className="w-full max-w-[90rem] mx-auto mt-8" data-aos="fade">
         <Slider {...settings}>
           {chunkedData.map((chunk, index) => (
             <div key={index} className="p-4">

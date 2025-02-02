@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // 이미지 import
 import excavation1 from "../assets/images/excavation1.png";
@@ -6,6 +8,17 @@ import excavation2 from "../assets/images/excavation2.png";
 import excavation3 from "../assets/images/excavation3.png";
 
 const YoutubeSection = () => {
+
+  useEffect(() => {
+      // AOS 초기화
+      AOS.init({
+        duration: 800, // 애니메이션 지속 시간
+        once: false, // 애니메이션 반복 실행
+        easing: "ease-in-out", // 애니메이션 효과
+        offset: 50, // 애니메이션 시작 지점
+      });
+  }, []);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoSrc, setVideoSrc] = useState("");
 
@@ -47,19 +60,19 @@ const YoutubeSection = () => {
   };
 
   return (
-    <div className="bg-gray-400 mt-20 py-10">
-      <div className="flex items-center justify-center gap-4 mb-10">
+    <div className="bg-gray-900 mt-20 py-10">
+      <div className="flex items-center justify-center gap-4 mb-4" data-aos="fade">
           {/* <h2 className="text-3xl font-bold text-gray-900 text-center">
             국방부 유해발굴감식단
           </h2> */}
-        <img
+        {/* <img
           src="https://i.namu.wiki/i/u8TaOgiNGBM_aEWiYJlD61zTCytP8ZD7tzVhyPeG_knxhaHoptPqA0ZTbNE95j-IGGcR6syUKVTqqmt-s6YBJL_7T0BHXo2q5yGz20kmocR3MI4A8-Rjkp37jl74EBsaFCmUQk6H2j345CNqUTVjXg.svg"
           alt="국방부 유해발굴감식단"
           className="h-12"
-        />
+        /> */}
       </div>
-      <p className="text-center text-gray-500 font-semibold mb-10">
-        국방부 유해발굴감식단(MND Agency for KIA Recovery & Identification)은 <br />
+      <h2 className="text-center text-gray-100 text-3xl font-semibold mb-4">국방부 유해발굴감식단</h2>
+      <p className="text-center text-gray-400 text-base font-semibold mb-10">
         6.25 전쟁 당시 전사하였으나 미수습된 전사자의 유해를 발굴, 감식하여 <br />
         가족의 품으로 보내는 보훈 사업을 수행하는 대한민국 국방부의 직할부대입니다.
       </p>

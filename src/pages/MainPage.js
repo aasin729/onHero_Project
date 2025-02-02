@@ -38,13 +38,13 @@ const MainPage = () => {
       </div>
 
       {/* Section: 한국전쟁 정보 */}
-      <section className="py-20 px-6 bg-gray-200">
+      <section className="py-20 px-6 bg-gray-900">
       <div className="max-w-screen-xl mx-auto">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row items-center gap-6"  data-aos="fade">
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-3xl font-bold mb-10">한국전쟁 (6.25 전쟁)</h2>
-            <p className="text-gray-800 text-lg  mb-4">
+            <h2 className="text-3xl text-gray-100 font-bold mb-10">한국전쟁 (6.25 전쟁)</h2>
+            <p className="text-gray-300 font-semibold text-lg  mb-4">
               6.25전쟁은 1950년 6월 25일 북한군의 기습 남침으로 시작된 한반도의 비극적인 전쟁으로, 남북한 간의 이념 갈등과 냉전 시대의 국제적 대리전 성격을 띠고 있었습니다. 약 3년간 진행되며 한반도는 38선을 중심으로 치열한 공방전이 이어졌고, UN군과 중공군이 개입하며 국제전으로 확대되었습니다. 이 전쟁은 약 300만 명 이상의 사상자와 난민을 발생시키고, 국토의 80%가 초토화되는 막대한 피해를 남긴 채 1953년 7월 27일 정전협정을 통해 휴전되었습니다.
             </p>
           </div>
@@ -99,11 +99,11 @@ const MainPage = () => {
                 className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center transition-transform transform hover:scale-105"
               >
                 {/* 번호 */}
-                <div className="text-blue-800 text-2xl font-bold mb-4">{item.number}</div>
+                <div className="text-blue-800 text-3xl font-bold mb-4">{item.number}</div>
                 {/* 타이틀 */}
                 <h3 className="text-xl font-bold mb-2 text-gray-800">{item.title}</h3>
                 {/* 내용 */}
-                <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+                <p className="text-gray-400 text-sm font-bold leading-relaxed">{item.description}</p>
               </div>
           ))}
         </div>
