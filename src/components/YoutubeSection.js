@@ -60,7 +60,7 @@ const YoutubeSection = () => {
   };
 
   return (
-    <div className="bg-gray-900 mt-20 py-10">
+    <div className="bg-gray-900  py-10">
       <div className="flex items-center justify-center gap-4 mb-4" data-aos="fade">
           {/* <h2 className="text-3xl font-bold text-gray-900 text-center">
             국방부 유해발굴감식단

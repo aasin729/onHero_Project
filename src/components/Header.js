@@ -23,12 +23,19 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full fixed top-0 z-50 font-bold  transition-all duration-300 ${isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"}`}
+      className={`w-full fixed top-0 z-50 font-bold transition-all duration-300 ${
+        isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"
+      }`}
     >
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* 로고 부분 */}
         <div className="flex items-center">
-          <img src="/img/koreaflag.png" alt="Logo" className="h-10" />
+          {/* 스크롤에 따라 로고 변경 */}
+          <img
+            src={isScrolled ? "/img/logo2.png" : "/img/logo1.png"}
+            alt="Logo"
+            className="h-10"
+          />
         </div>
 
         {/* 메뉴바 */}
@@ -58,11 +65,6 @@ const Header = () => {
               전투/선열정보
             </Link>
           </li>
-          {/* <li>
-            <Link to="/cyber-memorial" className="text-xl hover:text-gray-300">
-              사이버추모
-            </Link>
-          </li> */}
         </ul>
 
         {/* 햄버거 메뉴 버튼 */}
@@ -113,11 +115,6 @@ const Header = () => {
             전투/선열정보
           </Link>
         </li>
-        {/* <li>
-          <Link to="/cyber-memorial" className="block py-2 text-lg font-semibold hover:text-gray-300">
-            사이버추모
-          </Link>
-        </li> */}
       </ul>
     </header>
   );

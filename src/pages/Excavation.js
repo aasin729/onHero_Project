@@ -9,15 +9,16 @@ import Footer from "../components/footer";
 
 const Excavation = () => {
 
-   useEffect(() => {
-      // AOS 초기화
-      AOS.init({
-        duration: 800, // 애니메이션 지속 시간
-        once: false, // 애니메이션 반복 실행
-        easing: "ease-in-out", // 애니메이션 효과
-        offset: 50, // 애니메이션 시작 지점
-      });
-    }, []);
+  useEffect(() => {
+     // AOS 초기화
+     AOS.init({
+       duration: 800, // 애니메이션 지속 시간
+       once: false, // 애니메이션 반복 실행
+       easing: "ease-in-out", // 애니메이션 효과
+       offset: 50, // 애니메이션 시작 지점
+     });
+  }, []);
+  
   const [data, setData] = useState([]);
   const [totals, setTotals] = useState({
     ourfrcs_roka: 0,
@@ -90,22 +91,24 @@ const Excavation = () => {
     }
   };
 
-  const animateValue = (key, start, end, duration) => {
+  const animateValue = (key, start, end, duration = 1000) => {
     const startTime = performance.now();
-
+  
     const step = (currentTime) => {
       const progress = Math.min((currentTime - startTime) / duration, 1);
       const currentValue = Math.floor(start + (end - start) * progress);
-
+  
       setAnimatedTotals((prev) => ({ ...prev, [key]: currentValue }));
-
+  
       if (progress < 1) {
         requestAnimationFrame(step);
       }
     };
-
+  
     requestAnimationFrame(step);
   };
+  
+  
 
   useEffect(() => {
     fetchData();
@@ -224,7 +227,7 @@ const Excavation = () => {
 
   return (
     <>
-    <div className="mt-20  relative">
+    <div className="mt-20 relative">
       {/* 로딩 메시지 */}
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -335,19 +338,21 @@ const Excavation = () => {
       </div>
 
       {/* 차트 영역 */}
-      <div className="w-full max-w-[90rem] mx-auto mt-8" data-aos="fade">
-        <Slider {...settings}>
-          {chunkedData.map((chunk, index) => (
-            <div key={index} className="p-4">
-              <Chart
-                options={generateChartOptions(chunk)}
-                series={generateChartSeries(chunk)}
-                type="bar"
-                height={500}
-              />
-            </div>
-          ))}
-        </Slider>
+      <div className="w-full bg-white">
+          <div className=" max-w-[90rem] mx-auto py-10" data-aos="fade">
+            <Slider {...settings}>
+              {chunkedData.map((chunk, index) => (
+                <div key={index} className="p-4">
+                  <Chart
+                    options={generateChartOptions(chunk)}
+                    series={generateChartSeries(chunk)}
+                    type="bar"
+                    height={500}
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
       </div>
     </div>
     {/* 유해 발굴단 소개 컴포넌트 */}

@@ -113,58 +113,58 @@ const MainPage = () => {
 
 
     {/* Section: Ads */}
-    <section className="py-20 px-4 container mx-auto bg-white" data-aos="fade">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-        <div
-          className="p-4 bg-red-100 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300  hover:border-blue-900 cursor-pointer"
-          style={{
-            backgroundImage: "url('/img/banner1.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <p className="text-gray-600 text-lg font-bold mb-4 mt-20 text-left">
-            참전용사와 그 가족의 안녕을 위해
-            <br />
-            국가공헌협회와 함께해주세요.
-          </p>
-          <button className="bg-red-500 text-white px-4 py-2 rounded-md">
-            기부하기
-          </button>
-        </div>
-        
-        <div className="flex items-center p-4 rounded-lg shadow-md h-60 border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer">
-          <div className="flex-1 text-left">
-            <p className="text-gray-600 text-lg font-bold mb-4">
-              영웅의 귀환을
+    <section className=" bg-white">
+      <div className="py-20 px-4 container mx-auto" data-aos="fade">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div
+            className="p-4 bg-red-100 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300  hover:border-blue-900 cursor-pointer"
+            style={{
+              backgroundImage: "url('/img/banner1.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <p className="text-gray-600 text-lg font-bold mb-4 mt-20 text-left">
+              참전용사와 그 가족의 안녕을 위해
               <br />
-              DNA로 함께 밝혀요!
-              <br />
-              여러분의 관심과 참여가<br /> 필요합니다!
-              <br />
-              <strong className="text-blue-700 text-3xl font-bold">1577-5625</strong>
+              국가공헌협회와 함께해주세요.
             </p>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+              기부하기
+            </button>
           </div>
-          <div className="flex-shrink-0 w-1/2">
-            <img
-              src="/img/DNAbanner.jpg"
-              alt="DNA Banner"
-              className="h-full w-full object-cover rounded-lg"
-            />
+          
+          <div className="flex items-center p-4 rounded-lg shadow-md h-60 border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer">
+            <div className="flex-1 text-left">
+              <p className="text-gray-600 text-lg font-bold mb-4">
+                영웅의 귀환을
+                <br />
+                DNA로 함께 밝혀요!
+                <br />
+                여러분의 관심과 참여가<br /> 필요합니다!
+                <br />
+                <strong className="text-blue-700 text-3xl font-bold">1577-5625</strong>
+              </p>
+            </div>
+            <div className="flex-shrink-0 w-1/2">
+              <img
+                src="/img/DNAbanner.jpg"
+                alt="DNA Banner"
+                className="h-full w-full object-cover rounded-lg"
+              />
+            </div>
           </div>
+          <div
+            className="p-4 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+            style={{
+              backgroundImage: "url('/img/banner2.png')",
+              backgroundSize: "100%",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          ></div>
         </div>
-        
-        <div
-          className="p-4 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
-          style={{
-            backgroundImage: "url('/img/banner2.png')",
-            backgroundSize: "100%",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        ></div>
-    
       </div>
     </section>
         
