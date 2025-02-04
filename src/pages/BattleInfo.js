@@ -28,6 +28,7 @@ const BattleInfo = () => {
     "/img/3.jpg",
     "/img/4.jpg",
     "/img/5.jpg",
+    "/img/6.jpg",
   ];
 
   useEffect(() => {

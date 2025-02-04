@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa"; // 리액트 아이콘 사용
+import { FaBars, FaTimes, FaArrowUp  } from "react-icons/fa";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +12,13 @@ const Header = () => {
     } else {
       setIsScrolled(false);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 부드럽게 스크롤 이동
+    });
   };
 
   useEffect(() => {
@@ -116,6 +123,15 @@ const Header = () => {
           </Link>
         </li>
       </ul>
+
+      {/* 오른쪽 하단 스크롤 버튼 */}
+      <button
+      onClick={scrollToTop}
+      className="fixed bottom-9 right-9 bg-blue-900 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-700 transition-all"
+    >
+      <FaArrowUp size={25} />
+    </button>
+
     </header>
   );
 };
