@@ -37,12 +37,12 @@ const MainPage = () => {
       </div>
 
       {/* Section: 한국전쟁 정보 */}
-      <section className="py-20 px-6 bg-gray-900">
+      <section className="py-20 px-6 bg-black">
       <div className="max-w-screen-xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row items-center gap-6"  data-aos="fade">
+        <div className="flex flex-col md:flex-row items-center gap-6 py-10"  data-aos="fade">
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-3xl text-gray-100 font-bold mb-10">한국전쟁 (6.25 전쟁)</h2>
+            <h2 className="text-3xl text-gray-100 font-bold mb-10">한국전쟁 (6.25 전쟁)<p className="text-2xl text-yellow-500 mt-2">THE KOREAN WAR</p></h2>
             <p className="text-gray-300 font-semibold text-lg  mb-4">
               6.25전쟁은 1950년 6월 25일 북한군의 기습 남침으로 시작된 한반도의 비극적인 전쟁으로, 남북한 간의 이념 갈등과 냉전 시대의 국제적 대리전 성격을 띠고 있었습니다. 약 3년간 진행되며 한반도는 38선을 중심으로 치열한 공방전이 이어졌고, UN군과 중공군이 개입하며 국제전으로 확대되었습니다. 이 전쟁은 약 300만 명 이상의 사상자와 난민을 발생시키고, 국토의 80%가 초토화되는 막대한 피해를 남긴 채 1953년 7월 27일 정전협정을 통해 휴전되었습니다.
             </p>
@@ -106,10 +106,8 @@ const MainPage = () => {
               </div>
           ))}
         </div>
-
       </div>
     </section>
-
 
     {/* Section: Ads */}
     <section className=" bg-white">
@@ -129,7 +127,9 @@ const MainPage = () => {
               <br />
               국가공헌협회와 함께해주세요.
             </p>
-            <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+            <button
+              className="px-6 py-3 bg-red-500 rounded-lg font-bold text-white hover:bg-red-400 transition duration-300 ease-in-out transform"
+            >
               기부하기
             </button>
           </div>
@@ -161,8 +161,21 @@ const MainPage = () => {
               backgroundSize: "100%",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
+              position: "relative",
             }}
-          ></div>
+          >
+            <div className="absolute inset-0 flex items-center justify-center  text-white">
+              <div>
+                <h2 className="text-3xl text-white font-bold mb-2">6.25 전사자 유가족 찾기</h2>
+                <p className="text-xl text-gray-200 font-semibold mb-6">유전자 시료채취 참여 안내</p>
+                <button
+                  className="px-6 py-3 bg-blue-900 rounded-lg font-bold text-white hover:bg-blue-800 transition duration-300 ease-in-out transform"
+                >
+                  자세히 보기
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

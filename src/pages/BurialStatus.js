@@ -32,11 +32,11 @@ const BurialStatus = () => {
   return (
     <div>
       {/* 상단 콘텐츠 섹션 */}
-      <div className="w-full bg-gray-900 py-40 mt-20">
+      <div className="w-full bg-black py-40 mt-20">
         <div className="container mx-auto flex flex-row items-center gap-8" data-aos="fade">
           {/* 소개 글 */}
           <div className="w-1/2 text-gray-100">
-            <h2 className="text-3xl font-bold text-gray-100 mb-4">국립 서울 현충원<p className="text-xl mt-2">SEOUL NATIONAL CEMETERY</p></h2>
+            <h2 className="text-3xl font-bold text-gray-100 mb-4">국립 서울 현충원<p className="text-2xl text-yellow-500 mt-2">SEOUL NATIONAL CEMETERY</p></h2>
             <p className="text-gray-300 text-xl font-semibold mb-8">
               국립서울현충원은 지난 1955년 7월, 국군묘지로 창설된 이래 국가와 민족을
               위하여 희생하신 순국선열과 호국영령들의 충정과 위훈을 기리는 민족의 성지로 자리매김하여

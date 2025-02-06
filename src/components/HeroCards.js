@@ -172,7 +172,7 @@ const HeroCards = () => {
   };
 
   return (
-  <div className="bg-gray-300 min-h-[calc(80vh)]  p-10 " >
+  <div className="bg-gray-200 min-h-[calc(80vh)] p-10 " >
     <div className="flex items-center justify-between mb-10" data-aos="fade" >
         {/* 왼쪽 제목 */}
         <h2 className="text-3xl mt-10 text-gray-900 font-bold">
@@ -209,7 +209,7 @@ const HeroCards = () => {
         </div>
       </div>
       {/* 카드 섹션 (컨테이너 박스) */}
-      <div className="bg-gray-100 p-10 rounded-xl shadow-md">
+      <div className="bg-gray-300 p-10 rounded-xl shadow-md">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6" data-aos="fade" >
           {visibleHeroes.map((hero, index) => (
             <div
@@ -245,21 +245,21 @@ const HeroCards = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex justify-center items-center mt-6 space-x-2">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={`px-4 py-2 rounded-lg ${
-              page === currentPage
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            } hover:bg-blue-400 hover:text-white`}
-          >
-            {page}
-          </button>
-        ))}
+        <div className="flex justify-center items-center mt-6 space-x-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`px-4 py-2 rounded-lg ${
+                page === currentPage
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700"
+              } hover:bg-blue-400 hover:text-white`}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
       </div>
       <Modal
         isOpen={isModalOpen}

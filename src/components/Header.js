@@ -31,50 +31,52 @@ const Header = () => {
   return (
     <header
       className={`w-full fixed top-0 z-50 font-bold transition-all duration-300 ${
-        isScrolled ? "bg-white text-black" : "bg-transparent text-gray-300"
+        isScrolled ? "bg-white text-black" : "bg-transparent text-white"
       }`}
     >
-      <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        {/* 로고 부분 */}
+      <nav className="container mx-auto px-4 py-8 flex items-center justify-between">
+       {/* 로고 부분 */}
         <div className="flex items-center">
           {/* 스크롤에 따라 로고 변경 */}
-          <img
-            src={isScrolled ? "/img/logo2.png" : "/img/logo1.png"}
-            alt="Logo"
-            className="h-10"
-          />
+          <Link to="/">
+            <img
+              src={isScrolled ? "/img/logo2.png" : "/img/logo1.png"}
+              alt="Logo"
+              className="h-14"
+            />
+          </Link>
         </div>
 
         {/* 메뉴바 */}
         <ul className="hidden md:flex space-x-8">
           <li>
-            <Link to="/" className="text-xl hover:text-gray-300">
+            <Link to="/" className="text-xl hover:text-gray-400 transition duration-300">
               메인페이지
             </Link>
           </li>
           <li>
-            <Link to="/participation" className="text-xl hover:text-gray-300">
+            <Link to="/participation" className="text-xl hover:text-gray-400 transition duration-300">
               UN군 참전 현황
             </Link>
           </li>
           <li>
-            <Link to="/excavation" className="text-xl hover:text-gray-300">
+            <Link to="/excavation" className="text-xl hover:text-gray-400 transition duration-300">
               유해발굴
             </Link>
           </li>
           <li>
-            <Link to="/burial-status" className="text-xl hover:text-gray-300">
+            <Link to="/burial-status" className="text-xl hover:text-gray-400 transition duration-300">
               안장현황
             </Link>
           </li>
           <li>
-            <Link to="/battle-info" className="text-xl hover:text-gray-300">
+            <Link to="/battle-info" className="text-xl hover:text-gray-400 transition duration-300">
               전투/선열정보
             </Link>
           </li>
         </ul>
-
-        {/* 햄버거 메뉴 버튼 */}
+            
+        {/* 햄버거 메뉴 버튼(반응형) */}
         <button
           className="md:hidden text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -126,12 +128,11 @@ const Header = () => {
 
       {/* 오른쪽 하단 스크롤 버튼 */}
       <button
-      onClick={scrollToTop}
-      className="fixed bottom-9 right-9 bg-blue-900 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg hover:bg-blue-700 transition-all"
-    >
-      <FaArrowUp size={25} />
-    </button>
-
+        onClick={scrollToTop}
+        className="fixed bottom-9 right-9 bg-blue-900 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg hover:bg-white hover:text-black transition-all duration-300"
+      >
+        <FaArrowUp size={25} />
+      </button>
     </header>
   );
 };

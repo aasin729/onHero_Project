@@ -91,12 +91,17 @@ const Excavation = () => {
     }
   };
 
-  const animateValue = (key, start, end, duration = 1000) => {
-    const startTime = performance.now();
+  const animateValue = (key, start, end, duration = 50) => {
+    // start가 항상 0이 되도록 고정하고, end 값을 그대로 사용
+    const startValue = 0;
+    const endValue = end;
   
+    const startTime = performance.now();
+    
     const step = (currentTime) => {
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      const currentValue = Math.floor(start + (end - start) * progress);
+      // currentValue가 0부터 end까지 자연스럽게 증가하도록 처리
+      const currentValue = Math.max(0, Math.round(startValue + (endValue - startValue) * progress));
   
       setAnimatedTotals((prev) => ({ ...prev, [key]: currentValue }));
   
@@ -109,7 +114,7 @@ const Excavation = () => {
   };
   
   
-
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -138,7 +143,7 @@ const Excavation = () => {
   useEffect(() => {
     if (isInView) {
       Object.keys(totals).forEach((key) =>
-        animateValue(key, 0, totals[key], 1000)
+        animateValue(key, 0, totals[key], 50)
       );
     }
   }, [isInView, totals]);
@@ -227,7 +232,7 @@ const Excavation = () => {
 
   return (
     <>
-    <div className="mt-20 relative">
+    <div className="mt-24 relative">
       {/* 로딩 메시지 */}
       {loading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -236,14 +241,14 @@ const Excavation = () => {
           </p>
         </div>
       )}
-      <div ref={totalsSectionRef} className="w-full bg-gray-100 py-12" data-aos="fade">
+      <div ref={totalsSectionRef} className="w-full bg-black py-20" data-aos="fade">
         <div className="max-w-[100rem] mx-auto">
-          <h1 className="text-center text-3xl font-extrabold text-gray-800 mb-4">
-            전사자 유해 발굴 현황
+          <h1 className="text-center text-3xl font-extrabold text-white mb-4">
+            전사자 유해 발굴 합계 현황
           </h1>
-          <p className="text-center text-lg font-semibold text-gray-400 mb-12">(2000년 ~ 2021년)</p>
+          <p className="text-center text-xl font-semibold text-white mb-8">(2000년 ~ 2021년)</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 py-4 gap-8">
             {/* 대한민국 국기 */}
             <div className="bg-white shadow-lg rounded-xl p-8 text-center relative overflow-hidden">
               {/* 배경 이미지 */}
@@ -254,7 +259,7 @@ const Excavation = () => {
                 }}
               ></div>
               {/* 어두운 오버레이 */}
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 bg-black opacity-40"></div>
               {/* 텍스트 콘텐츠 */}
               <div className="relative z-10">
                 <p className="text-white text-xl font-semibold mb-4">총 아군 국군</p>
@@ -272,7 +277,7 @@ const Excavation = () => {
                   backgroundImage: "url('https://flagcdn.com/w320/un.png')",
                 }}
               ></div>
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 bg-black opacity-40"></div>
               <div className="relative z-10">
                 <p className="text-white text-xl font-semibold mb-4">총 아군 UN군</p>
                 <p className="text-5xl font-extrabold text-white">
@@ -289,7 +294,7 @@ const Excavation = () => {
                   backgroundImage: "url('https://flagcdn.com/w320/un.png')",
                 }}
               ></div>
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 bg-black opacity-40"></div>
               <div className="relative z-10">
                 <p className="text-white text-xl font-semibold mb-4">
                   총 신원확인 전사자
@@ -308,7 +313,7 @@ const Excavation = () => {
                   backgroundImage: "url('https://flagcdn.com/w320/kp.png')",
                 }}
               ></div>
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 bg-black opacity-40"></div>
               <div className="relative z-10">
                 <p className="text-white text-xl font-semibold mb-4">총 적군 북한</p>
                 <p className="text-5xl font-extrabold text-white">
@@ -325,7 +330,7 @@ const Excavation = () => {
                   backgroundImage: "url('https://flagcdn.com/w320/cn.png')",
                 }}
               ></div>
-              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="absolute inset-0 bg-black opacity-40"></div>
               <div className="relative z-10">
                 <p className="text-white text-xl font-semibold mb-4">총 적군 중국</p>
                 <p className="text-5xl font-extrabold text-white">
@@ -339,7 +344,7 @@ const Excavation = () => {
 
       {/* 차트 영역 */}
       <div className="w-full bg-white">
-          <div className=" max-w-[90rem] mx-auto py-10" data-aos="fade">
+          <div className=" max-w-[90rem] mx-auto py-16" data-aos="fade">
             <Slider {...settings}>
               {chunkedData.map((chunk, index) => (
                 <div key={index} className="p-4">
@@ -354,6 +359,7 @@ const Excavation = () => {
             </Slider>
           </div>
       </div>
+      
     </div>
     {/* 유해 발굴단 소개 컴포넌트 */}
      <YoutubeSection />

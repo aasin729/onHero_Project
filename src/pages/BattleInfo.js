@@ -113,7 +113,7 @@ const BattleInfo = () => {
   return (
     <>
       {/* 🔥 유튜브 동영상 자동 실행 */}
-      <div className="relative w-full mt-20" style={{ height: "90vh" }}>
+      <div className="relative w-full mt-28" style={{ height: "90vh" }}>
         <iframe
           className="absolute top-0 left-0 w-full h-full"
           src="https://www.youtube.com/embed/Dbrn-bDeJJ0?autoplay=1&mute=1&controls=1&loop=1&playlist=Dbrn-bDeJJ0"
