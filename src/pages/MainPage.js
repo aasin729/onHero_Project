@@ -2,9 +2,15 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import videoFile from "../assets/videos/movie1.mp4";
-import Header from "../components/Header";
+import Header from "../shared/Header";
 import RelatedSites from "../components/RelatedSites";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 
 const MainPage = () => {
   useEffect(() => {
@@ -109,74 +115,176 @@ const MainPage = () => {
       </div>
     </section>
 
-    {/* Section: Ads */}
-    <section className=" bg-white">
-      <div className="py-20 px-4 container mx-auto" data-aos="fade">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-          <div
-            className="p-4 bg-red-100 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300  hover:border-blue-900 cursor-pointer"
-            style={{
-              backgroundImage: "url('/img/banner1.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+   {/* Section: Ads */}
+    <section className="bg-white py-20 px-4">
+      <div className="container mx-auto" data-aos="fade">
+            <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={20}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 2000, disableOnInteraction: false }}
+            loop={true} 
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
             }}
+            className="pb-10"
           >
-            <p className="text-gray-600 text-lg font-bold mb-4 mt-20 text-left">
-              참전용사와 그 가족의 안녕을 위해
-              <br />
-              국가공헌협회와 함께해주세요.
-            </p>
-            <button
-              className="px-6 py-3 bg-red-500 rounded-lg font-bold text-white hover:bg-red-400 transition duration-300 ease-in-out transform"
+          <style>
+                {`
+                  .swiper-button-prev, .swiper-button-next {
+                    color: white !important;
+                    background-color: rgba(255, 255, 255, 0.4);
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    transition: background-color 0.3s ease-in-out;
+                  }
+                  .swiper-button-prev:hover, .swiper-button-next:hover {
+                    background-color: rgba(255, 255, 255, 0.7);
+                  }
+                  .swiper-button-prev::after, .swiper-button-next::after {
+                    font-size: 20px;
+                    font-weight: bold;
+                  }
+                  .swiper-pagination {
+                    display: none !important;
+                  }
+                `}
+            </style>
+          {/* 광고 배너 1 */}
+          <SwiperSlide>
+            <div
+              className="p-4 bg-red-100 rounded-lg shadow-md h-72 text-center border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner1.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             >
-              기부하기
-            </button>
-          </div>
-          
-          <div className="flex items-center p-4 rounded-lg shadow-md h-60 border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer">
-            <div className="flex-1 text-left">
-              <p className="text-gray-600 text-lg font-bold mb-4">
-                영웅의 귀환을
+              <p className="text-gray-600 text-lg font-bold mb-4 mt-20 text-left">
+                참전용사의 안녕을 위해
                 <br />
-                DNA로 함께 밝혀요!
-                <br />
-                여러분의 관심과 참여가<br /> 필요합니다!
-                <br />
-                <strong className="text-blue-700 text-3xl font-bold">1577-5625</strong>
+                국가공헌협회와 함께해주세요.
               </p>
+              <button
+                className="px-6 py-3 bg-red-500 rounded-lg font-bold text-white hover:bg-red-400 transition duration-300 ease-in-out transform"
+                onClick={() => window.open("https://www.kkh.or.kr/business/veteran.php", "_blank")}
+              >
+                기부하기
+              </button>
             </div>
-            <div className="flex-shrink-0 w-1/2">
-              <img
-                src="/img/DNAbanner.jpg"
-                alt="DNA Banner"
-                className="h-full w-full object-cover rounded-lg"
-              />
+          </SwiperSlide>
+
+           {/* 광고 배너 2 */}
+           <SwiperSlide>
+            <div
+              className="p-4 rounded-lg shadow-md h-72 text-center bg-blue-600 border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner5.png')",
+                backgroundSize: "100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                position: "relative",
+              }}
+            >
             </div>
-          </div>
-          <div
-            className="p-4 rounded-lg shadow-md h-60 text-center border border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
-            style={{
-              backgroundImage: "url('/img/banner2.png')",
-              backgroundSize: "100%",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              position: "relative",
-            }}
-          >
-            <div className="absolute inset-0 flex items-center justify-center  text-white">
-              <div>
-                <h2 className="text-3xl text-white font-bold mb-2">6.25 전사자 유가족 찾기</h2>
-                <p className="text-xl text-gray-200 font-semibold mb-6">유전자 시료채취 참여 안내</p>
-                <button
-                  className="px-6 py-3 bg-blue-900 rounded-lg font-bold text-white hover:bg-blue-800 transition duration-300 ease-in-out transform"
-                >
-                  자세히 보기
-                </button>
+          </SwiperSlide>  
+
+          {/* 광고 배너 3 */}
+          <SwiperSlide>
+            <div
+              className="p-4 rounded-lg shadow-md  h-72 text-center border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner4.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >   
+            </div>
+          </SwiperSlide>
+
+          {/* 광고 배너 4 */}
+          <SwiperSlide>
+            <div
+              className="p-4  rounded-lg shadow-md  h-72 text-center border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner3.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+            </div>
+          </SwiperSlide>
+            
+          {/* 광고 배너 5 */}
+          <SwiperSlide>
+            <div className="flex items-center p-4 rounded-lg shadow-md h-72 border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer">
+              <div className="flex-1 text-left">
+                <p className="text-gray-600 text-lg font-bold mb-4">
+                  영웅의 귀환을
+                  <br />
+                  DNA로 함께 밝혀요!
+                  <br />
+                  여러분의 관심과 참여가<br /> 필요합니다!
+                  <br />
+                  <strong className="text-blue-700 text-3xl font-bold">1577-5625</strong>
+                </p>
+              </div>
+              <div className="flex-shrink-0 w-1/2">
+                <img
+                  src="/img/DNAbanner.jpg"
+                  alt="DNA Banner"
+                  className="h-full w-full object-cover rounded-lg"
+                />
               </div>
             </div>
-          </div>
-        </div>
+          </SwiperSlide>
+
+          {/* 광고 배너 6 */}
+          <SwiperSlide>
+            <div
+              className="p-4  rounded-lg shadow-md  h-72 text-center border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner6.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+            </div>
+          </SwiperSlide>
+            
+          {/* 광고 배너 7 */}
+          <SwiperSlide>
+            <div
+              className="p-4 rounded-lg shadow-md h-72 text-center border-2 border-gray-300 transition-all duration-300 hover:border-blue-900 cursor-pointer"
+              style={{
+                backgroundImage: "url('/img/banner2.png')",
+                backgroundSize: "100%",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                position: "relative",
+              }}
+            >
+              <div className="absolute inset-0 flex items-center justify-center text-white">
+                <div>
+                  <h2 className="text-3xl text-white font-bold mb-2">6.25 전사자 유가족 찾기</h2>
+                  <p className="text-xl text-gray-200 font-semibold mb-6">유전자 시료채취 참여 안내</p>
+                  <button
+                    className="px-4 py-3 bg-blue-900 rounded-lg font-bold text-white hover:bg-blue-800 transition duration-300 ease-in-out transform"
+                    onClick={() => window.open("https://www.withcountry.mil.kr/mbshome/mbs/withcountry/subview.jsp?id=withcountry_030100000000", "_blank")}
+                  >
+                    자세히 보기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          
+        </Swiper>
       </div>
     </section>
         
@@ -238,7 +346,6 @@ const MainPage = () => {
            `}
          </style>
        </section>
-
 
       {/* Related Sites Section */}
       <RelatedSites data-aos="fade" />

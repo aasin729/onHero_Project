@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import videoFile from "../assets/videos/movie1.mp4";
-import Header from "../components/Header";
+import Header from "../shared/Header";
 import KoreaWar from "../assets/images/koreawar.png";
 import RelatedSites from "../components/RelatedSites";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
 
 const MainPage = () => {
   useEffect(() => {

@@ -15,7 +15,7 @@ const RelatedSites = () => {
     {
       name: "해군",
       logo: "/img/sublogo3.png", // 로컬 이미지 경로
-      link: "https://rokaf.airforce.mil.kr/sites/airforce/index.do",
+      link: "https://www.navy.mil.kr/mbshome/mbs/navy/index.do",
     },
     {
       name: "공군",

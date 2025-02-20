@@ -2,33 +2,56 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import burialStatus from "../data/burialStatus.json"; 
 
 const SeoulMemorialAPI = () => {
   const [data, setData] = useState([]); // API 데이터를 저장할 상태
   const [animatedData, setAnimatedData] = useState([]); // 애니메이션 데이터를 저장할 상태
   const [error, setError] = useState(null);
 
-    useEffect(() => {
-      // AOS 초기화
-      AOS.init({
-        duration: 800, // 애니메이션 지속 시간
-        once: false, // 애니메이션 반복 실행
-        easing: "ease-in-out", // 애니메이션 효과
-        offset: 50, // 애니메이션 시작 지점
-      });
-    }, []);
+  useEffect(() => {
+    // AOS 초기화
+    AOS.init({
+      duration: 800,
+      once: false,
+      easing: "ease-in-out",
+      offset: 50,
+    });
+  }, []);
 
   const fetchData = async () => {
     try {
       const API_KEY = "3230313638333132383734373732313039";
       const API_URL = `/${API_KEY}/json/DS_MMCMTSEOUL_BURAL_PRST/1/12`;
-
+  
       const response = await axios.get(API_URL);
-      const result = response.data.DS_MMCMTSEOUL_BURAL_PRST.row;
-      setData(result);
+      const result = response?.data?.DS_MMCMTSEOUL_BURAL_PRST?.row;
+  
+      if (result && Array.isArray(result)) {
+        setData(result);
+      } else {
+        throw new Error("API 데이터 형식 오류");
+      }
     } catch (error) {
-      console.error("API 호출 실패:", error);
-      setError("데이터를 불러오는데 실패했습니다.");
+      console.error("API 호출 실패:", error); // 콘솔에서만 확인
+      fetchBackupData(); // API 실패 시 백업 데이터 호출 (UI에는 표시 안 함)
+    }
+  };
+  
+  // JSON 파일에서 데이터 가져오기
+  const fetchBackupData = () => {
+    try {
+      console.log("백업 JSON 응답:", burialStatus);
+      const backupData = burialStatus?.DATA;
+
+      if (backupData && Array.isArray(backupData)) {
+        setData(backupData);
+      } else {
+        throw new Error("백업 JSON 데이터 형식 오류");
+      }
+    } catch (error) {
+      console.error("백업 JSON 로드 실패:", error);
+      setData([]); // 데이터가 없을 경우 빈 배열로 설정
     }
   };
 

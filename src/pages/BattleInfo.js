@@ -3,7 +3,8 @@ import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import HeroCards from "../components/HeroCards";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
+import KoreanWarBattleMap from "../components/KoreanWarBattleMap";
 
 const BattleInfo = () => {
    useEffect(() => {
@@ -73,7 +74,7 @@ const BattleInfo = () => {
       setBattleData(groupedData);
     } catch (err) {
       console.error("Error fetching battle information:", err);
-      setError("데이터를 가져오는 중 오류가 발생했습니다.");
+      // setError("데이터를 가져오는 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
@@ -126,6 +127,9 @@ const BattleInfo = () => {
 
       {/* HeroCards */}
       <HeroCards />
+
+      {/* KoreanWarBattleMap */}
+      {/* <KoreanWarBattleMap /> */}
 
       {/* 🔥 타임라인 배경을 동적으로 변경 */}
       <div
@@ -180,7 +184,6 @@ const BattleInfo = () => {
           })}
         </div>
       </div>
-
       <Footer />
     </>
   );

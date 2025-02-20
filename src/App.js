@@ -6,7 +6,7 @@ import Excavation from "./pages/Excavation";
 import BurialStatus from "./pages/BurialStatus";
 import BattleInfo from "./pages/BattleInfo";
 // import CyberMemorial from "./pages/CyberMemorial";
-import Header from "./components/Header";
+import Header from "./shared/Header";
 import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {

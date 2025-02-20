@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SeoulMemorialAPI from "../components/SeoulMemorialAPI";
 import NationalMemorialMap from "../components/NationalMemorialMap";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
 import image1 from "../assets/images/cemetary1.png";
 import image2 from "../assets/images/cemetary2.png";
 import image3 from "../assets/images/cemetary3.png";

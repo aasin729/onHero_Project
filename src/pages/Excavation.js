@@ -5,7 +5,7 @@ import "aos/dist/aos.css";
 import Chart from "react-apexcharts";
 import Slider from "react-slick";
 import YoutubeSection from "../components/YoutubeSection";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
 
 const Excavation = () => {
 

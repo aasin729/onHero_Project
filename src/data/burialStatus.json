@@ -1,0 +1,15 @@
+{"DESCRIPTION":{"invstg_date":"조사 일자","seq":"순번","dvs":"구분","lylddcmt_bural":"충혼당 안장","grv_bural":"묘소 안장","lylddcmt_rmndrablt":"충혼당 잔여능력","grv_rmndrablt":"묘소 잔여능력"}
+, "DATA":[
+{"invstg_date":"2016.05.31","seq":"1","dvs":"국가원수","lylddcmt_bural":"0","grv_bural":"4","lylddcmt_rmndrablt":"0","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"2","dvs":"임정요인","lylddcmt_bural":"0","grv_bural":"18","lylddcmt_rmndrablt":"0","grv_rmndrablt":"15"}
+,{"invstg_date":"2016.05.31","seq":"3","dvs":"애국지사","lylddcmt_bural":"84","grv_bural":"214","lylddcmt_rmndrablt":"38","grv_rmndrablt":"2"}
+,{"invstg_date":"2016.05.31","seq":"4","dvs":"국가유공자","lylddcmt_bural":"2","grv_bural":"69","lylddcmt_rmndrablt":"79","grv_rmndrablt":"7"}
+,{"invstg_date":"2016.05.31","seq":"5","dvs":"일반유공자","lylddcmt_bural":"20","grv_bural":"2","lylddcmt_rmndrablt":"106","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"6","dvs":"군인 장군","lylddcmt_bural":"34","grv_bural":"356","lylddcmt_rmndrablt":"54","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"7","dvs":"군인 장교","lylddcmt_bural":"2574","grv_bural":"4488","lylddcmt_rmndrablt":"102","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"8","dvs":"군인 부사관","lylddcmt_bural":"3787","grv_bural":"10343","lylddcmt_rmndrablt":"203","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"9","dvs":"군인 사병","lylddcmt_bural":"4199","grv_bural":"36179","lylddcmt_rmndrablt":"237","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"10","dvs":"군무원","lylddcmt_bural":"49","grv_bural":"1952","lylddcmt_rmndrablt":"35","grv_rmndrablt":"0"}
+,{"invstg_date":"2016.05.31","seq":"11","dvs":"경찰 간부","lylddcmt_bural":"99","grv_bural":"292","lylddcmt_rmndrablt":"48","grv_rmndrablt":"91"}
+,{"invstg_date":"2016.05.31","seq":"12","dvs":"경찰 비간부","lylddcmt_bural":"253","grv_bural":"528","lylddcmt_rmndrablt":"141","grv_rmndrablt":"0"}
+]}

@@ -65,7 +65,7 @@ const YoutubeSection = () => {
   return (
     <div className="bg-black pb-20">
 
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4" data-aos="fade" >
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4" data-aos="fade">
         {videos.map((video) => (
           <div
             key={video.id}

@@ -3,7 +3,7 @@ import Globe from "globe.gl";
 import * as THREE from "three";
 import ApexCharts from "react-apexcharts";
 import { countries } from "../data/countries";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -343,43 +343,48 @@ const Participation = () => {
       </div>
 
       {/* 콘텐츠 3 */}
-      <div className="w-full bg-blue-400 text-white flex items-center justify-center" style={{ height: "500px" }} >
-        <div className="container flex flex-col md:flex-row items-center justify-between px-4 md:px-8" data-aos="fade">
+      <div className="w-full bg-blue-400 text-white flex items-center justify-center py-10">
+        <div className="container max-w-screen-xl flex flex-col md:flex-row items-center justify-between px-4 md:px-8" data-aos="fade">
 
           {/* 왼쪽 섹션: 문구 */}
-          <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-4">
-            <h2 className="text-3xl font-bold mb-4">유엔참전용사 국제추모의 날</h2>
-            <h3 className="text-4xl font-extrabold mb-6">Turn Toward Busan</h3>
-            <div className="flex items-center justify-center gap-4 mb-4">
-              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">11</div>
-              <span className="text-3xl font-bold">월</span>
-              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">11</div>
-              <span className="text-3xl font-bold">일</span>
-              <div className="bg-blue-600 text-white rounded-md w-16 h-16 flex items-center justify-center text-3xl font-bold">11</div>
-              <span className="text-3xl font-bold">시</span>
+          <div className="w-full md:w-1/2 flex flex-col items-center md:items-start justify-center p-4 text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">유엔참전용사 국제추모의 날</h2>
+            <h3 className="text-3xl md:text-4xl font-extrabold mb-6">Turn Toward Busan</h3>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4 mb-4">
+              <div className="bg-blue-600 text-white rounded-md w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-2xl md:text-3xl font-bold">11</div>
+              <span className="text-2xl md:text-3xl font-bold">월</span>
+              <div className="bg-blue-600 text-white rounded-md w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-2xl md:text-3xl font-bold">11</div>
+              <span className="text-2xl md:text-3xl font-bold">일</span>
+              <div className="bg-blue-600 text-white rounded-md w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-2xl md:text-3xl font-bold">11</div>
+              <span className="text-2xl md:text-3xl font-bold">시</span>
             </div>
-            <p className="text-center font-semibold mt-6 text-gray-100 text-base md:text-lg px-4">
-              6·25전쟁에서 대한민국의 자유와 평화를 위해<br /> 헌신한 유엔참전용사를 기억하기 위해<br />
+
+            <p className="font-semibold text-gray-100 text-sm md:text-lg px-4 md:px-0">
+              6·25전쟁에서 대한민국의 자유와 평화를 위해<br />
+              헌신한 유엔참전용사를 기억하기 위해<br />
               매년 11월 11시 부산을 향하여 1분간 묵념하는 추모식을 거행합니다.
             </p>
           </div>
 
           {/* 오른쪽 섹션: 유튜브 영상 */}
           <div className="w-full md:w-1/2 flex items-center justify-center p-4">
-        <iframe
-          className="w-full max-w-xl h-[300px] md:h-[350px]"  // 너비와 높이 조정
-          src="https://www.youtube.com/embed/qJPQLl6npMs?si=lHwIfeOHw-k5O_A3"
-          title="YouTube video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+            <div className="w-full max-w-xl">
+              <iframe
+                className="w-full aspect-video rounded-lg shadow-lg"
+                src="https://www.youtube.com/embed/qJPQLl6npMs?si=lHwIfeOHw-k5O_A3"
+                title="YouTube video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
-</div>
-
-    {/* Footer */}
-     <Footer />
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

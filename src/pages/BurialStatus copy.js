@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SeoulMemorialAPI from "../components/SeoulMemorialAPI";
 import NationalMemorialMap from "../components/NationalMemorialMap";
-import Footer from "../components/footer";
+import Footer from "../shared/footer";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

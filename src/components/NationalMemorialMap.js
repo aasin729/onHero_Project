@@ -3,6 +3,7 @@ import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import burialLocations from "../data/burialLocations";
+import intermentStatus from "../data/IntermentStatus.json"; // ✅ JSON 파일 import
 
 const NationalMemorialMap = () => {
 
@@ -41,27 +42,52 @@ const NationalMemorialMap = () => {
   const itemsPerPage = 15;
   const maxPageButtons = 4;
 
-  const fetchBurialData = async () => {
-    setLoading(true);
-    setError(null);
+    // ✅ API 호출
+    const fetchBurialData = async () => {
+      setLoading(true);
+      try {
+        const API_KEY = "3230313638333132383734373732313039";
+        const totalDataCount = 60000;
+        const API_URL = `/${API_KEY}/json/DS_TB_MND_NTNLMMCMT_BURALPRSTS/1/${totalDataCount}`;
+  
+        const response = await axios.get(API_URL);
+        const result = response?.data?.DS_TB_MND_NTNLMMCMT_BURALPRSTS?.row;
+  
+        if (result && Array.isArray(result)) {
+          const reversedData = result.reverse();
+          setBurialData(reversedData);
+          setFilteredData(reversedData);
+  
+          const militarySet = new Set(reversedData.map((item) => item.mildsc));
+          setMilitaryOptions([...militarySet]);
+        } else {
+          throw new Error("API 데이터 형식 오류");
+        }
+      } catch (error) {
+        console.error("API 호출 실패:", error);
+        fetchBackupData(); // ✅ API 실패 시 JSON 백업 데이터 불러오기
+      } finally {
+        setLoading(false);
+      }
+    };
+
+   // ✅ JSON 파일에서 백업 데이터 불러오기
+   const fetchBackupData = () => {
     try {
-      const API_KEY = "3230313638333132383734373732313039";
-      const totalDataCount = 60000;
-      const API_URL = `/${API_KEY}/json/DS_TB_MND_NTNLMMCMT_BURALPRSTS/1/${totalDataCount}`;
+      console.log("백업 JSON 응답:", intermentStatus);
+      const backupData = intermentStatus?.DATA;
 
-      const response = await axios.get(API_URL);
-      const result = response.data.DS_TB_MND_NTNLMMCMT_BURALPRSTS.row;
-      const reversedData = result.reverse() || [];
-      setBurialData(reversedData);
-      setFilteredData(reversedData);
+      if (backupData && Array.isArray(backupData)) {
+        setBurialData(backupData);
+        setFilteredData(backupData);
 
-      const militarySet = new Set(reversedData.map((item) => item.mildsc));
-      setMilitaryOptions([...militarySet]);
+        const militarySet = new Set(backupData.map((item) => item.mildsc));
+        setMilitaryOptions([...militarySet]);
+      } else {
+        throw new Error("백업 JSON 데이터 형식 오류");
+      }
     } catch (error) {
-      console.error("API 호출 실패:", error);
-      setError("데이터를 불러오는 중 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
+      console.error("백업 JSON 로드 실패:", error);
     }
   };
 
