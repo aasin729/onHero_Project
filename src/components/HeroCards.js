@@ -172,101 +172,91 @@ const HeroCards = () => {
   };
 
   return (
-  <div className="bg-gray-200 min-h-[calc(80vh)] p-10 " >
-    <div className="flex items-center justify-between mb-10" data-aos="fade" >
-        {/* 왼쪽 제목 */}
-        <h2 className="text-3xl mt-10 text-gray-900 font-bold">
-          한국전쟁 호국선열 목록
-        </h2>
-
-        {/* 오른쪽 검색 필드 */}
-        <div className="flex items-center">
-          <input
-            type="text"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            placeholder="이름을 입력하세요"
-            className="px-4 h-12 w-64 py-2 border rounded-lg mr-2"
-          />
-          <button
-            onClick={handleSearch}
-            className="px-4 py-2 w-28 h-12 bg-blue-900 text-white rounded-lg hover:bg-blue-800"
-          >
-            조회
-          </button>
-          <select
-            value={armyType}
-            onChange={(e) => setArmyType(e.target.value)}
-            className="px-4 py-2 h-12 border rounded-lg ml-2 cursor-pointer"
-          >
-            <option value="">군별 전체</option>
-            <option value="육군">육군</option>
-            <option value="해군">해군</option>
-            <option value="해병대">해병대</option>
-            <option value="공군">공군</option>
-            <option value="경찰">경찰</option>
-          </select>
-        </div>
+    <div className="bg-gray-200 min-h-[calc(80vh)] p-4 sm:p-6 md:p-10">
+    <div className="flex flex-col md:flex-row items-center justify-between mb-6 md:mb-10" data-aos="fade">
+      {/* 왼쪽 제목 */}
+      <h2 className="text-2xl sm:text-3xl mt-4 sm:mt-10 text-gray-900 font-bold text-center md:text-left">
+        한국전쟁 호국선열 목록
+      </h2>
+  
+      {/* 오른쪽 검색 필드 */}
+      <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 mt-4 md:mt-0">
+        <input
+          type="text"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          placeholder="이름을 입력하세요"
+          className="px-4 h-10 sm:h-12 w-56 sm:w-64 py-2 border rounded-lg"
+        />
+        <button
+          onClick={handleSearch}
+          className="px-4 py-2 h-10 sm:h-12 w-24 sm:w-28 bg-blue-900 text-white rounded-lg hover:bg-blue-800"
+        >
+          조회
+        </button>
+        <select
+          value={armyType}
+          onChange={(e) => setArmyType(e.target.value)}
+          className="px-4 py-2 h-10 sm:h-12 border rounded-lg cursor-pointer"
+        >
+          <option value="">군별 전체</option>
+          <option value="육군">육군</option>
+          <option value="해군">해군</option>
+          <option value="해병대">해병대</option>
+          <option value="공군">공군</option>
+          <option value="경찰">경찰</option>
+        </select>
       </div>
-      {/* 카드 섹션 (컨테이너 박스) */}
-      <div className="bg-gray-300 p-10 rounded-xl shadow-md">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6" data-aos="fade" >
-          {visibleHeroes.map((hero, index) => (
-            <div
-              key={index}
-              className="p-4 bg-white rounded-lg shadow-xl hover:scale-105 transition-transform cursor-pointer flex items-center"
-              onClick={() => handleCardClick(hero.content)}
-            >
-              <div className="flex-1">
-                <h3 className="text-lg font-bold">{hero.title}</h3>
-                <p>
-                  <strong>한문 이름:</strong> {hero.hanName}
-                </p>
-                <p>
-                  <strong>날짜:</strong> {hero.date}
-                </p>
-                <p>
-                  <strong>지역:</strong> {hero.location}
-                </p>
-                <p>
-                  <strong>계급:</strong> {hero.rank}
-                </p>
-                <p>
-                  <strong>상훈:</strong> {hero.medal} 
-                </p>
-              </div>
-              <div className="flex-shrink-0 ml-4">
-                <img
-                  src={getRankImage(hero.rank)}
-                  alt={`${hero.rank} 이미지`}
-                  className="w-auto h-auto max-w-16 max-h-16"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center items-center mt-6 space-x-2">
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`px-4 py-2 rounded-lg ${
-                page === currentPage
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } hover:bg-blue-400 hover:text-white`}
-            >
-              {page}
-            </button>
-          ))}
-        </div>
-      </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        content={selectedContent}
-      />
     </div>
+  
+    {/* 카드 섹션 (반응형) */}
+    <div className="bg-gray-300 p-6 sm:p-10 rounded-xl shadow-md">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6" data-aos="fade">
+        {visibleHeroes.map((hero, index) => (
+          <div
+            key={index}
+            className="p-4 bg-white rounded-lg shadow-xl hover:scale-105 transition-transform cursor-pointer flex items-center"
+            onClick={() => handleCardClick(hero.content)}
+          >
+            <div className="flex-1">
+              <h3 className="text-lg font-bold">{hero.title}</h3>
+              <p><strong>한문 이름:</strong> {hero.hanName}</p>
+              <p><strong>날짜:</strong> {hero.date}</p>
+              <p><strong>지역:</strong> {hero.location}</p>
+              <p><strong>계급:</strong> {hero.rank}</p>
+              <p><strong>상훈:</strong> {hero.medal}</p>
+            </div>
+            <div className="flex-shrink-0 ml-4">
+              <img
+                src={getRankImage(hero.rank)}
+                alt={`${hero.rank} 이미지`}
+                className="w-auto h-auto max-w-16 max-h-16"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+  
+      {/* 페이지네이션 */}
+      <div className="flex justify-center items-center mt-6 space-x-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`px-4 py-2 rounded-lg ${
+              page === currentPage ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+            } hover:bg-blue-400 hover:text-white`}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
+    </div>
+  
+    {/* 모달 */}
+    <Modal isOpen={isModalOpen} onClose={handleCloseModal} content={selectedContent} />
+  </div>
+  
   );
 };
 

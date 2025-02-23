@@ -32,7 +32,7 @@ const BurialStatus = () => {
   return (
     <div>
       {/* 상단 콘텐츠 섹션 */}
-      <div className="w-full bg-black py-20 mt-10">
+      <div className="w-full bg-black py-20 mt-20">
         <div className="container mx-auto flex flex-col md:flex-row items-center gap-8 px-4" data-aos="fade">
           {/* 소개 글 */}
           <div className="w-full md:w-1/2 text-gray-100 text-center md:text-left">

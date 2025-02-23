@@ -224,11 +224,12 @@ const NationalMemorialMap = () => {
 
   return (
     <div className="bg-gray-100">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto p-20">
-        <div className="col-span-2 mb-6" data-aos="fade" >
-          <div className="bg-white shadow-lg rounded-lg p-10  mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto p-4 md:p-20">
+
+       <div className="col-span-2 mb-6" data-aos="fade">
+          <div className="bg-white shadow-lg rounded-lg p-10 mx-auto">
             <h2 className="text-xl font-bold mb-4">검색 및 필터링</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               <input
                 type="text"
                 placeholder="이름 검색"
@@ -267,18 +268,17 @@ const NationalMemorialMap = () => {
               </button>
             </div>
           </div>
-
         </div>
 
-        <div className="col-span-1 flex flex-col" style={{ height: "750px" }} data-aos="fade" > 
+        <div className="col-span-1 flex flex-col hidden md:flex" style={{ height: "750px" }}> 
           <h2 className="text-xl font-bold mb-4">서울국립현충원 지도</h2>
           <div id="map" className="w-full flex-grow rounded shadow-lg border"></div>
         </div>
 
-        <div className="col-span-1 flex flex-col" style={{ height: "700px" }} data-aos="fade" >
+        <div className="col-span-1 flex flex-col h-full md:h-[700px]">
           <h2 className="text-xl font-bold mb-4">안장자 현황</h2>
           {loading ? (
-              <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex flex-col items-center justify-center h-full">
               <div className="animate-spin rounded-full h-16 w-16 border-t-8 border-blue-500 border-solid border-opacity-90"></div>
               <p className="mt-8 text-center text-gray-600 text-xl font-semibold">
                 현재 안장자 데이터를 로딩중입니다... 잠시만 기다려주십시오.
@@ -288,38 +288,39 @@ const NationalMemorialMap = () => {
             <p className="text-center text-red-500">{error}</p>
           ) : (
             <>
-              <table className="table-auto w-full text-left border-collapse border border-gray-300">
-                <thead>
-                  <tr className="bg-gray-200">
-                    <th className="border px-4 py-2 text-center">묘역</th>
-                    <th className="border px-4 py-2 text-center">성명</th>
-                    <th className="border px-4 py-2 text-center">군별</th>
-                    <th className="border px-4 py-2 text-center">계급</th>
-                    <th className="border px-4 py-2 text-center">안장일</th>
-                    <th className="border px-4 py-2 text-center">안장 위치</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.map((row, index) => (
-                    <tr
-                      key={index}
-                      className={`cursor-pointer ${
-                        selectedRowIndex === index
-                          ? "bg-blue-200"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleRowClick(index, row.dvs)}
-                    >
-                      <td className="border px-4 py-2 text-center">{row.dvs}</td>
-                      <td className="border px-4 py-2 text-center">{row.stmt}</td>
-                      <td className="border px-4 py-2 text-center">{row.mildsc}</td>
-                      <td className="border px-4 py-2 text-center">{row.rank}</td>
-                      <td className="border px-4 py-2 text-center">{row.buraldate}</td>
-                      <td className="border px-4 py-2 text-center">{row.buralpstn}</td>
+              {/* 모바일 화면에서 가로 스크롤 적용 */}
+              <div className="md:overflow-visible overflow-x-auto w-full">
+                <table className="table-auto min-w-full border-collapse border border-gray-300">
+                  <thead>
+                    <tr className="bg-gray-200">
+                      <th className="border px-4 py-2 text-center hidden md:table-cell">묘역</th>
+                      <th className="border px-4 py-2 text-center">성명</th>
+                      <th className="border px-4 py-2 text-center">군별</th>
+                      <th className="border px-4 py-2 text-center hidden md:table-cell">계급</th>
+                      <th className="border px-4 py-2 text-center">안장일</th>
+                      <th className="border px-4 py-2 text-center">안장 위치</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((row, index) => (
+                      <tr
+                        key={index}
+                        className={`cursor-pointer ${
+                          selectedRowIndex === index ? "bg-blue-200" : "hover:bg-gray-300"
+                        }`}
+                        onClick={() => handleRowClick(index, row.dvs)}
+                      >
+                        <td className="border px-4 py-2 text-center hidden md:table-cell">{row.dvs}</td>
+                        <td className="border px-4 py-2 text-center">{row.stmt}</td>
+                        <td className="border px-4 py-2 text-center">{row.mildsc}</td>
+                        <td className="border px-4 py-2 text-center hidden md:table-cell">{row.rank}</td>
+                        <td className="border px-4 py-2 text-center">{row.buraldate}</td>
+                        <td className="border px-4 py-2 text-center">{row.buralpstn}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               {/* 페이지네이션 */}
               <div className="flex justify-center items-center mt-4 space-x-1">
@@ -327,9 +328,7 @@ const NationalMemorialMap = () => {
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                   className={`px-3 py-1 border rounded ${
-                    currentPage === 1
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-white hover:bg-gray-100"
+                    currentPage === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-white hover:bg-gray-100"
                   }`}
                 >
                   이전
@@ -339,9 +338,7 @@ const NationalMemorialMap = () => {
                     key={page}
                     onClick={() => handlePageChange(page)}
                     className={`px-3 py-1 border rounded ${
-                      currentPage === page
-                        ? "bg-blue-500 text-white"
-                        : "bg-white hover:bg-gray-100"
+                      currentPage === page ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"
                     }`}
                   >
                     {page}
@@ -351,9 +348,7 @@ const NationalMemorialMap = () => {
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                   className={`px-3 py-1 border rounded ${
-                    currentPage === totalPages
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-white hover:bg-gray-100"
+                    currentPage === totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-white hover:bg-gray-100"
                   }`}
                 >
                   다음
@@ -362,7 +357,7 @@ const NationalMemorialMap = () => {
             </>
           )}
         </div>
-
+        
         {/* 현충원 지도 보기 이미지 모달 */}
         {isMapModalOpen && (
           <div
@@ -390,6 +385,7 @@ const NationalMemorialMap = () => {
             </div>
           </div>
         )}
+        
       </div>
     </div>
   );

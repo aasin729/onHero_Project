@@ -53,16 +53,18 @@ const MainPage = () => {
               6.25전쟁은 1950년 6월 25일 북한군의 기습 남침으로 시작된 한반도의 비극적인 전쟁으로, 남북한 간의 이념 갈등과 냉전 시대의 국제적 대리전 성격을 띠고 있었습니다. 약 3년간 진행되며 한반도는 38선을 중심으로 치열한 공방전이 이어졌고, UN군과 중공군이 개입하며 국제전으로 확대되었습니다. 이 전쟁은 약 300만 명 이상의 사상자와 난민을 발생시키고, 국토의 80%가 초토화되는 막대한 피해를 남긴 채 1953년 7월 27일 정전협정을 통해 휴전되었습니다.
             </p>
           </div>
-          <div className="md:w-1/2">
-            <iframe
-              className="w-full h-64 md:h-80 rounded-lg"
-              src="https://www.youtube.com/embed/MmsB7vMcjzk"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <div className="w-full md:w-1/2">
+              <div className="relative w-full aspect-video">
+                <iframe
+                  className="absolute inset-0 w-full h-full rounded-lg"
+                  src="https://www.youtube.com/embed/MmsB7vMcjzk"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
         </div>
 
         {/* Info Cards Section */}

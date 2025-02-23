@@ -142,28 +142,26 @@ const BattleInfo = () => {
           backgroundAttachment: "fixed", // 배경 고정 효과 추가
         }}
       >
-        {/* <h1 className="text-4xl text-gray-100 font-bold text-center mb-20">전투 정보 타임라인</h1> */}
-
         {loading && <p className="text-center mt-10">로딩 중...</p>}
         {error && <p className="text-center mt-10 text-red-500">{error}</p>}
-
+      
         {/* 타임라인 */}
-        <div className="relative px-20" data-aos="fade">
-          <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300"></div>
-
+        <div className="relative px-5 md:px-20" data-aos="fade">
+          <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300 hidden md:block"></div>
+      
           {Object.keys(battleData).slice(0, visibleCount).map((dateKey, index) => {
             const group = battleData[dateKey];
             const isLeft = index % 2 === 0;
             return (
               <div
                 key={index}
-                className={`flex items-center w-3/4 mx-auto mb-10 ${
-                  isLeft ? "justify-start" : "justify-end"
+                className={`flex md:flex-row flex-col items-center md:w-3/4 w-full mx-auto mb-10 ${
+                  isLeft ? "md:justify-start" : "md:justify-end"
                 }`}
               >
                 <div
-                  className={`relative w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
-                    isLeft ? "ml-10" : "mr-10"
+                  className={`relative w-full md:w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
+                    isLeft ? "md:ml-10" : "md:mr-10"
                   }`}
                 >
                   <p className="text-gray-400 font-semibold text-xl mb-2">{dateKey}</p>

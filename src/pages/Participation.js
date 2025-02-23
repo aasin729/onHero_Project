@@ -226,16 +226,17 @@ const Participation = () => {
                 ref={globeEl}
                 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex-1"
               />
-
               {/* 왼쪽 오버레이 문구 */}
               <div
-                className="absolute top-1/2 left-10 bg-balck bg-opacity-70 text-white p-4 rounded-lg shadow-lg w-[25%] z-20 transform -translate-y-1/2"
+                className="absolute top-1/2 left-10 bg-black bg-opacity-70 text-white p-4 rounded-lg shadow-lg w-[25%] z-20 transform -translate-y-1/2 hidden md:block"
                 style={{
                   maxHeight: "80vh",
                   overflowY: "auto",
                 }}
               >
-                <h2 className="text-5xl font-bold text-center mb-6" data-aos="fade">6.25전쟁 UN참전국</h2>
+                <h2 className="text-5xl font-bold text-center mb-6" data-aos="fade">
+                  6.25전쟁 UN참전국
+                </h2>
                 <p className="text-center text-xl" data-aos="fade">
                   국기를 클릭하면 각 국가의 <br /> 참전 정보를 확인할 수 있습니다.
                 </p>
@@ -244,7 +245,7 @@ const Participation = () => {
               {/* 선택된 국가 정보 */}
               {selectedCountry && (
                 <div
-                  className="absolute top-1/2 right-10 bg-white p-6 rounded-lg shadow-lg w-[24%] z-20 transform -translate-y-1/2"
+                  className="absolute top-1/2 right-10 bg-white p-6 rounded-lg shadow-lg w-[24%] z-20 transform -translate-y-1/2 hidden md:block"
                   style={{
                     maxHeight: "80vh",
                     overflowY: "auto",
@@ -260,17 +261,57 @@ const Participation = () => {
                       />
                       <h2 className="text-lg font-bold">{selectedCountry.country}</h2>
                     </div>
-                    
+                
                     {/* 오른쪽: 텍스트 정보 */}
                     <div className="flex-1">
-                      <p>지원 구분: <span className="text-base font-bold ml-2">{selectedCountry.supportType}</span></p>
-                      <p>참전 연인원: <span className="text-base font-bold ml-2">{selectedCountry.personnel.toLocaleString()}명</span></p>
-                      <p>참전 형태: <span className="text-base font-bold ml-2">{selectedCountry.role}</span></p>
-                      <p>피해 계: <span className="text-base font-bold ml-2">{selectedCountry.casualties.toLocaleString()}명</span></p>
-                      <p>전사: <span className="text-base font-bold ml-2">{selectedCountry.deaths.toLocaleString()}명</span></p>
-                      <p>부상: <span className="text-base font-bold ml-2">{selectedCountry.injuries.toLocaleString()}명</span></p>
-                      <p>실종: <span className="text-base font-bold ml-2">{selectedCountry.missing.toLocaleString()}명</span></p>
-                      <p>포로: <span className="text-base font-bold ml-2">{selectedCountry.prisoners.toLocaleString()}명</span></p>
+                      <p>
+                        지원 구분:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.supportType}
+                        </span>
+                      </p>
+                      <p>
+                        참전 연인원:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.personnel.toLocaleString()}명
+                        </span>
+                      </p>
+                      <p>
+                        참전 형태:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.role}
+                        </span>
+                      </p>
+                      <p>
+                        피해 계:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.casualties.toLocaleString()}명
+                        </span>
+                      </p>
+                      <p>
+                        전사:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.deaths.toLocaleString()}명
+                        </span>
+                      </p>
+                      <p>
+                        부상:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.injuries.toLocaleString()}명
+                        </span>
+                      </p>
+                      <p>
+                        실종:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.missing.toLocaleString()}명
+                        </span>
+                      </p>
+                      <p>
+                        포로:{" "}
+                        <span className="text-base font-bold ml-2">
+                          {selectedCountry.prisoners.toLocaleString()}명
+                        </span>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -278,51 +319,55 @@ const Participation = () => {
           </div>
       </div>
 
-        {/* 참전 현황부분 */}
-      <div ref={totalsSectionRef} className="w-full bg-white text-black flex flex-col items-center justify-center py-20 border-t border-gray-300">
+      {/* 참전 현황 부분 */}
+      <div ref={totalsSectionRef} className="w-full px-10 bg-white text-black flex flex-col items-center justify-center py-20 border-t border-gray-300">
         <h2 className="text-3xl font-bold mb-12">UN군 총 참전 현황</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 text-center">
-          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10 w-full text-center">
+          <div className="w-full bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
             <p className="text-xl text-gray-400 font-semibold mb-8">참전 총인원</p>
-            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
+            <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.personnel.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+          <div className="w-full bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
             <p className="text-xl text-gray-400 font-semibold mb-8">전사 총인원</p>
-            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
+            <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.deaths.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+          <div className="w-full bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
             <p className="text-xl text-gray-400 font-semibold mb-8">부상 총인원</p>
             <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.injuries.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+          <div className="w-full bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
             <p className="text-xl text-gray-400 font-semibold mb-8">실종 총인원</p>
-            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
+            <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.missing.toLocaleString()}명
             </p>
           </div>
-          <div className="bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
+          <div className="w-full bg-gray-900 rounded-lg shadow-lg p-7 hover:shadow-xl transition-shadow duration-300">
             <p className="text-xl text-gray-400 font-semibold mb-8">포로 총인원</p>
-            <p className="text-4xl text-white  font-bold min-w-[6em] text-center">
+            <p className="text-4xl text-white font-bold min-w-[6em] text-center">
               {animatedValues.prisoners.toLocaleString()}명
             </p>
           </div>
         </div>
       </div>
 
-        {/* 차트부분 */}
+      {/* 차트부분 */}
       <div
-        className="w-full py-20 bg-cover bg-center bg-no-repeat" 
+        className="w-full py-20 px-10 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/img/unhero.png')" }}
       >
-        <h2 className="text-3xl text-center text-white font-bold mb-4" data-aos="fade">UN 참전국가별 비율 차트 (상위 5개국가)</h2>
-        <p className="text-xl text-center text-gray-200 font-semibold mb-8" data-aos="fade">* 상위 5개 국가까지만 차트에 표시됩니다.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-4/6 mx-auto" data-aos="fade">
+        <h2 className="text-3xl text-center text-white font-bold mb-4" data-aos="fade">
+          UN 참전국가별 비율 차트 (상위 5개국가)
+        </h2>
+        <p className="text-xl text-center text-gray-200 font-semibold mb-8" data-aos="fade">
+          * 상위 5개 국가까지만 차트에 표시됩니다.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 w-[90%] mx-auto" data-aos="fade">
           {Object.keys(chartTitles).map((key) => (
             <div 
               key={key} 
@@ -341,7 +386,7 @@ const Participation = () => {
           ))}
         </div>
       </div>
-
+        
       {/* 콘텐츠 3 */}
       <div className="w-full bg-blue-400 text-white flex items-center justify-center py-10">
         <div className="container max-w-screen-xl flex flex-col md:flex-row items-center justify-between px-4 md:px-8" data-aos="fade">
