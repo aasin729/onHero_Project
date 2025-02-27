@@ -1,13 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./pages/MainPage";
-import Participation from "./pages/Participation";
-import Excavation from "./pages/Excavation";
-import BurialStatus from "./pages/BurialStatus";
-import BattleInfo from "./pages/BattleInfo";
-// import CyberMemorial from "./pages/CyberMemorial";
+import MainPage from "./pages/Mainpage/MainPage";
+import Participation from "./pages/Participation/Participation";
+import Excavation from "./pages/Excavation/Excavation";
+import BurialStatus from "./pages/BurialStatus/BurialStatus";
+import BattleInfo from "./pages/BattleInfo/BattleInfo";
 import Header from "./shared/Header";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./shared/component/ScrollToTop";
 
 const App = () => {
   return (

@@ -14,7 +14,7 @@ const Footer = () => {
           <p className="leading-relaxed text-sm md:text-base">
             해당 웹사이트는 나라를 위해 헌신하신 모든 호국영령을 위한 마음을 담아 제작을 하였습니다.
           </p>
-          <p className="mt-2">&copy; 2025 KIM SANG HWAN | 010-4779-6536 | All rights reserved. </p>
+          <p className="mt-2">&copy; 2025 KIM SANG HWAN | 010-0000-0000 | All rights reserved. </p>
           </div>
         </div>
 
