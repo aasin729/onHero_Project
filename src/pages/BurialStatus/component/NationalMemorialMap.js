@@ -3,24 +3,22 @@ import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import burialLocations from "../../../data/burialLocations";
-import intermentStatus from "../../../data/IntermentStatus.json";
 
 const NationalMemorialMap = () => {
 
     useEffect(() => {
       // AOS 초기화
       AOS.init({
-        duration: 800, // 애니메이션 지속 시간
-        once: false, // 애니메이션 반복 실행
-        easing: "ease-in-out", // 애니메이션 효과
-        offset: 50, // 애니메이션 시작 지점
+        duration: 800, 
+        once: false, 
+        easing: "ease-in-out", 
+        offset: 50, 
       });
     }, []);
 
   const [burialData, setBurialData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
@@ -30,7 +28,6 @@ const NationalMemorialMap = () => {
   const [militaryOptions, setMilitaryOptions] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
@@ -42,7 +39,6 @@ const NationalMemorialMap = () => {
   const itemsPerPage = 15;
   const maxPageButtons = 4;
 
-    // ✅ API 호출
     const fetchBurialData = async () => {
       setLoading(true);
       try {
@@ -65,31 +61,10 @@ const NationalMemorialMap = () => {
         }
       } catch (error) {
         console.error("API 호출 실패:", error);
-        fetchBackupData(); // ✅ API 실패 시 JSON 백업 데이터 불러오기
       } finally {
         setLoading(false);
       }
     };
-
-   // ✅ JSON 파일에서 백업 데이터 불러오기
-   const fetchBackupData = () => {
-    try {
-      console.log("백업 JSON 응답:", intermentStatus);
-      const backupData = intermentStatus?.DATA;
-
-      if (backupData && Array.isArray(backupData)) {
-        setBurialData(backupData);
-        setFilteredData(backupData);
-
-        const militarySet = new Set(backupData.map((item) => item.mildsc));
-        setMilitaryOptions([...militarySet]);
-      } else {
-        throw new Error("백업 JSON 데이터 형식 오류");
-      }
-    } catch (error) {
-      console.error("백업 JSON 로드 실패:", error);
-    }
-  };
 
   useEffect(() => {
     fetchBurialData();
@@ -162,10 +137,6 @@ const NationalMemorialMap = () => {
       document.head.removeChild(script);
     };
   }, []);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
 
   const handleSearchAndFilter = () => {
     let filtered = burialData;
@@ -284,8 +255,6 @@ const NationalMemorialMap = () => {
                 현재 안장자 데이터를 로딩중입니다... 잠시만 기다려주십시오.
               </p>
             </div>
-          ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
           ) : (
             <>
               {/* 모바일 화면에서 가로 스크롤 적용 */}
