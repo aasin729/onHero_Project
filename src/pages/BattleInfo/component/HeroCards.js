@@ -81,10 +81,10 @@ const HeroCards = () => {
     useEffect(() => {
       // AOS 초기화
       AOS.init({
-        duration: 800, // 애니메이션 지속 시간
-        once: false, // 애니메이션 반복 실행
-        easing: "ease-in-out", // 애니메이션 효과
-        offset: 50, // 애니메이션 시작 지점
+        duration: 800,
+        once: false,
+        easing: "ease-in-out", 
+        offset: 50,
       });
     }, []);
   
