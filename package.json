@@ -54,6 +54,7 @@
   },
   "proxy": "https://openapi.mnd.go.kr",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
