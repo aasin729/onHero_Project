@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import burialStatus from "../../../data/burialStatus.json"; 
+import burialStatus from "../../../data/burialStatus.json";
 
 const SeoulMemorialAPI = () => {
   const [data, setData] = useState([]); // API 데이터를 저장할 상태
@@ -19,14 +19,18 @@ const SeoulMemorialAPI = () => {
     });
   }, []);
 
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  // 해당변수는 호스트가 localhost에서 클라이언트 서버를 열면 값이 없지만 다른 호스트를 사용시에는 netlify.toml에 설정해둔
+  // proxy값을 할당 받는다.
+
   const fetchData = async () => {
     try {
       const API_KEY = process.env.REACT_APP_API_KEY;
-      const API_URL = `/${API_KEY}/json/DS_MMCMTSEOUL_BURAL_PRST/1/12`;
-  
+      const API_URL = `${PROXY}/${API_KEY}/json/DS_MMCMTSEOUL_BURAL_PRST/1/12`;
+
       const response = await axios.get(API_URL);
       const result = response?.data?.DS_MMCMTSEOUL_BURAL_PRST?.row;
-  
+
       if (result && Array.isArray(result)) {
         setData(result);
       } else {
@@ -37,7 +41,7 @@ const SeoulMemorialAPI = () => {
       fetchBackupData(); // API 실패 시 백업 데이터 호출 (UI에는 표시 안 함)
     }
   };
-  
+
   // JSON 파일에서 데이터 가져오기
   const fetchBackupData = () => {
     try {
@@ -73,7 +77,12 @@ const SeoulMemorialAPI = () => {
       setAnimatedData(animated);
 
       data.forEach((item, index) => {
-        const keys = ["lylddcmt_bural", "grv_bural", "lylddcmt_rmndrablt", "grv_rmndrablt"];
+        const keys = [
+          "lylddcmt_bural",
+          "grv_bural",
+          "lylddcmt_rmndrablt",
+          "grv_rmndrablt",
+        ];
         keys.forEach((key) => {
           let start = 0;
           const end = parseInt(item[key], 10);
@@ -124,7 +133,9 @@ const SeoulMemorialAPI = () => {
                 className="bg-gray-800 bg-opacity-85 text-white p-4 rounded-lg shadow-lg"
               >
                 <div className="text-sm text-left px-8">
-                  <p className="text-xl mb-4 font-semibold text-center">{item.dvs}</p>
+                  <p className="text-xl mb-4 font-semibold text-center">
+                    {item.dvs}
+                  </p>
                   <table className="table-auto w-full text-left">
                     <tbody>
                       <tr>

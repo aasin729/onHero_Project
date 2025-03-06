@@ -5,16 +5,15 @@ import "aos/dist/aos.css";
 import burialLocations from "../../../data/burialLocations";
 
 const NationalMemorialMap = () => {
-
-    useEffect(() => {
-      // AOS 초기화
-      AOS.init({
-        duration: 800, 
-        once: false, 
-        easing: "ease-in-out", 
-        offset: 50, 
-      });
-    }, []);
+  useEffect(() => {
+    // AOS 초기화
+    AOS.init({
+      duration: 800,
+      once: false,
+      easing: "ease-in-out",
+      offset: 50,
+    });
+  }, []);
 
   const [burialData, setBurialData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -39,38 +38,43 @@ const NationalMemorialMap = () => {
   const itemsPerPage = 15;
   const maxPageButtons = 4;
 
-    const fetchBurialData = async () => {
-      setLoading(true);
-      try {
-        const API_KEY = process.env.REACT_APP_API_KEY;
-        const totalDataCount = 60000;
-        const API_URL = `/${API_KEY}/json/DS_TB_MND_NTNLMMCMT_BURALPRSTS/1/${totalDataCount}`;
-  
-        const response = await axios.get(API_URL);
-        const result = response?.data?.DS_TB_MND_NTNLMMCMT_BURALPRSTS?.row;
-  
-        if (result && Array.isArray(result)) {
-          const reversedData = result.reverse();
-          setBurialData(reversedData);
-          setFilteredData(reversedData);
-  
-          const militarySet = new Set(reversedData.map((item) => item.mildsc));
-          setMilitaryOptions([...militarySet]);
-        } else {
-          throw new Error("API 데이터 형식 오류");
-        }
-      } catch (error) {
-        console.error("API 호출 실패:", error);
-      } finally {
-        setLoading(false);
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  // 해당변수는 호스트가 localhost에서 클라이언트 서버를 열면 값이 없지만 다른 호스트를 사용시에는 netlify.toml에 설정해둔
+  // proxy값을 할당 받는다.
+
+  const fetchBurialData = async () => {
+    setLoading(true);
+    try {
+      const API_KEY = process.env.REACT_APP_API_KEY;
+      const totalDataCount = 60000;
+      const API_URL = `${PROXY}/${API_KEY}/json/DS_TB_MND_NTNLMMCMT_BURALPRSTS/1/${totalDataCount}`;
+
+      const response = await axios.get(API_URL);
+      const result = response?.data?.DS_TB_MND_NTNLMMCMT_BURALPRSTS?.row;
+
+      if (result && Array.isArray(result)) {
+        const reversedData = result.reverse();
+        setBurialData(reversedData);
+        setFilteredData(reversedData);
+
+        const militarySet = new Set(reversedData.map((item) => item.mildsc));
+        setMilitaryOptions([...militarySet]);
+      } else {
+        throw new Error("API 데이터 형식 오류");
       }
-    };
+    } catch (error) {
+      console.error("API 호출 실패:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchBurialData();
 
     const script = document.createElement("script");
-    script.src = "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8q6h69e47y";
+    script.src =
+      "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8q6h69e47y";
     script.async = true;
     script.onload = () => {
       if (window.naver) {
@@ -196,8 +200,7 @@ const NationalMemorialMap = () => {
   return (
     <div className="bg-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto p-4 md:p-20">
-
-       <div className="col-span-2 mb-6" data-aos="fade">
+        <div className="col-span-2 mb-6" data-aos="fade">
           <div className="bg-white shadow-lg rounded-lg p-10 mx-auto">
             <h2 className="text-xl font-bold mb-4">검색 및 필터링</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -223,14 +226,14 @@ const NationalMemorialMap = () => {
                   </option>
                 ))}
               </select>
-              
+
               <button
                 onClick={handleSearchAndFilter}
                 className="w-full h-14 px-6 bg-blue-900 text-white font-bold rounded-lg shadow hover:bg-blue-800"
               >
                 검색
               </button>
-              
+
               <button
                 onClick={toggleMapModal}
                 className="w-full h-14 px-6 bg-green-700 text-white font-bold rounded-lg shadow hover:bg-green-600"
@@ -241,9 +244,15 @@ const NationalMemorialMap = () => {
           </div>
         </div>
 
-        <div className="col-span-1 flex flex-col hidden md:flex" style={{ height: "750px" }}> 
+        <div
+          className="col-span-1 flex flex-col hidden md:flex"
+          style={{ height: "750px" }}
+        >
           <h2 className="text-xl font-bold mb-4">서울국립현충원 지도</h2>
-          <div id="map" className="w-full flex-grow rounded shadow-lg border"></div>
+          <div
+            id="map"
+            className="w-full flex-grow rounded shadow-lg border"
+          ></div>
         </div>
 
         <div className="col-span-1 flex flex-col h-full md:h-[700px]">
@@ -262,12 +271,18 @@ const NationalMemorialMap = () => {
                 <table className="table-auto min-w-full border-collapse border border-gray-300">
                   <thead>
                     <tr className="bg-gray-200">
-                      <th className="border px-4 py-2 text-center hidden md:table-cell">묘역</th>
+                      <th className="border px-4 py-2 text-center hidden md:table-cell">
+                        묘역
+                      </th>
                       <th className="border px-4 py-2 text-center">성명</th>
                       <th className="border px-4 py-2 text-center">군별</th>
-                      <th className="border px-4 py-2 text-center hidden md:table-cell">계급</th>
+                      <th className="border px-4 py-2 text-center hidden md:table-cell">
+                        계급
+                      </th>
                       <th className="border px-4 py-2 text-center">안장일</th>
-                      <th className="border px-4 py-2 text-center">안장 위치</th>
+                      <th className="border px-4 py-2 text-center">
+                        안장 위치
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -275,16 +290,30 @@ const NationalMemorialMap = () => {
                       <tr
                         key={index}
                         className={`cursor-pointer ${
-                          selectedRowIndex === index ? "bg-blue-200" : "hover:bg-gray-300"
+                          selectedRowIndex === index
+                            ? "bg-blue-200"
+                            : "hover:bg-gray-300"
                         }`}
                         onClick={() => handleRowClick(index, row.dvs)}
                       >
-                        <td className="border px-4 py-2 text-center hidden md:table-cell">{row.dvs}</td>
-                        <td className="border px-4 py-2 text-center">{row.stmt}</td>
-                        <td className="border px-4 py-2 text-center">{row.mildsc}</td>
-                        <td className="border px-4 py-2 text-center hidden md:table-cell">{row.rank}</td>
-                        <td className="border px-4 py-2 text-center">{row.buraldate}</td>
-                        <td className="border px-4 py-2 text-center">{row.buralpstn}</td>
+                        <td className="border px-4 py-2 text-center hidden md:table-cell">
+                          {row.dvs}
+                        </td>
+                        <td className="border px-4 py-2 text-center">
+                          {row.stmt}
+                        </td>
+                        <td className="border px-4 py-2 text-center">
+                          {row.mildsc}
+                        </td>
+                        <td className="border px-4 py-2 text-center hidden md:table-cell">
+                          {row.rank}
+                        </td>
+                        <td className="border px-4 py-2 text-center">
+                          {row.buraldate}
+                        </td>
+                        <td className="border px-4 py-2 text-center">
+                          {row.buralpstn}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -297,7 +326,9 @@ const NationalMemorialMap = () => {
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
                   className={`px-3 py-1 border rounded ${
-                    currentPage === 1 ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-white hover:bg-gray-100"
+                    currentPage === 1
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-white hover:bg-gray-100"
                   }`}
                 >
                   이전
@@ -307,7 +338,9 @@ const NationalMemorialMap = () => {
                     key={page}
                     onClick={() => handlePageChange(page)}
                     className={`px-3 py-1 border rounded ${
-                      currentPage === page ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"
+                      currentPage === page
+                        ? "bg-blue-500 text-white"
+                        : "bg-white hover:bg-gray-100"
                     }`}
                   >
                     {page}
@@ -317,7 +350,9 @@ const NationalMemorialMap = () => {
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
                   className={`px-3 py-1 border rounded ${
-                    currentPage === totalPages ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-white hover:bg-gray-100"
+                    currentPage === totalPages
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-white hover:bg-gray-100"
                   }`}
                 >
                   다음
@@ -326,7 +361,7 @@ const NationalMemorialMap = () => {
             </>
           )}
         </div>
-        
+
         {/* 현충원 지도 보기 이미지 모달 */}
         {isMapModalOpen && (
           <div
@@ -343,7 +378,9 @@ const NationalMemorialMap = () => {
               >
                 ✖
               </button>
-              <h2 className="text-xl font-bold mb-4 text-center">서울국립현충원 지도</h2>
+              <h2 className="text-xl font-bold mb-4 text-center">
+                서울국립현충원 지도
+              </h2>
               <div className="flex justify-center">
                 <img
                   src="/img/cemetaryMap.png" // 여기에 실제 이미지 경로를 설정
@@ -354,7 +391,6 @@ const NationalMemorialMap = () => {
             </div>
           </div>
         )}
-        
       </div>
     </div>
   );

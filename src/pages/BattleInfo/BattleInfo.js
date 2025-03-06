@@ -6,15 +6,15 @@ import HeroCards from "../BattleInfo/component/HeroCards";
 import Footer from "../../shared/footer";
 
 const BattleInfo = () => {
-   useEffect(() => {
-      // AOS 초기화
-      AOS.init({
-        duration: 800, // 애니메이션 지속 시간
-        once: false, // 애니메이션 반복 실행
-        easing: "ease-in-out", // 애니메이션 효과
-        offset: 50, // 애니메이션 시작 지점
-      });
-    }, []);
+  useEffect(() => {
+    // AOS 초기화
+    AOS.init({
+      duration: 800, // 애니메이션 지속 시간
+      once: false, // 애니메이션 반복 실행
+      easing: "ease-in-out", // 애니메이션 효과
+      offset: 50, // 애니메이션 시작 지점
+    });
+  }, []);
   const [battleData, setBattleData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,13 +37,17 @@ const BattleInfo = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  // 해당변수는 호스트가 localhost에서 클라이언트 서버를 열면 값이 없지만 다른 호스트를 사용시에는 netlify.toml에 설정해둔
+  // proxy값을 할당 받는다.
+
   const fetchBattleInfo = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const API_KEY = process.env.REACT_APP_API_KEY;
-      const API_URL = `/${API_KEY}/json/DS_WARHSTR_KORWAR_CBT_IN/1/1000`;
+      const API_URL = `${PROXY}/${API_KEY}/json/DS_WARHSTR_KORWAR_CBT_IN/1/1000`;
 
       const response = await axios.get(API_URL);
       const result = response.data.DS_WARHSTR_KORWAR_CBT_IN.row;
@@ -100,7 +104,10 @@ const BattleInfo = () => {
 
   // 🔥 스크롤 이벤트 핸들러: 타임라인이 스크롤될 때 배경 변경
   const handleScroll = () => {
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight * 0.8) {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight * 0.8
+    ) {
       setVisibleCount((prev) => prev + 3);
     }
 
@@ -140,42 +147,49 @@ const BattleInfo = () => {
       >
         {loading && <p className="text-center mt-10">로딩 중...</p>}
         {error && <p className="text-center mt-10 text-red-500">{error}</p>}
-      
+
         {/* 타임라인 */}
         <div className="relative px-5 md:px-20" data-aos="fade">
           <div className="absolute left-1/2 top-0 h-full w-1 bg-gray-300 hidden md:block"></div>
-      
-          {Object.keys(battleData).slice(0, visibleCount).map((dateKey, index) => {
-            const group = battleData[dateKey];
-            const isLeft = index % 2 === 0;
-            return (
-              <div
-                key={index}
-                className={`flex md:flex-row flex-col items-center md:w-3/4 w-full mx-auto mb-10 ${
-                  isLeft ? "md:justify-start" : "md:justify-end"
-                }`}
-              >
+
+          {Object.keys(battleData)
+            .slice(0, visibleCount)
+            .map((dateKey, index) => {
+              const group = battleData[dateKey];
+              const isLeft = index % 2 === 0;
+              return (
                 <div
-                  className={`relative w-full md:w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
-                    isLeft ? "md:ml-10" : "md:mr-10"
+                  key={index}
+                  className={`flex md:flex-row flex-col items-center md:w-3/4 w-full mx-auto mb-10 ${
+                    isLeft ? "md:justify-start" : "md:justify-end"
                   }`}
                 >
-                  <p className="text-gray-400 font-semibold text-xl mb-2">{dateKey}</p>
-                  {group.battles.map((battle, i) => (
-                    <div key={i} className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md cursor-pointer">
-                      <h3 className="text-xl font-bold">{battle.title}</h3>
-                      <p className="text-lg mt-1">
-                        <strong>전투 지역:</strong> {battle.region}
-                      </p>
-                      <p className="text-base">
-                        <strong>주요 인물:</strong> {battle.person}
-                      </p>
-                    </div>
-                  ))}
+                  <div
+                    className={`relative w-full md:w-1/2 p-4 bg-gray-800 rounded-lg shadow-md ${
+                      isLeft ? "md:ml-10" : "md:mr-10"
+                    }`}
+                  >
+                    <p className="text-gray-400 font-semibold text-xl mb-2">
+                      {dateKey}
+                    </p>
+                    {group.battles.map((battle, i) => (
+                      <div
+                        key={i}
+                        className="mt-4 p-4 bg-gray-700 rounded-lg shadow-md cursor-pointer"
+                      >
+                        <h3 className="text-xl font-bold">{battle.title}</h3>
+                        <p className="text-lg mt-1">
+                          <strong>전투 지역:</strong> {battle.region}
+                        </p>
+                        <p className="text-base">
+                          <strong>주요 인물:</strong> {battle.person}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
       <Footer />
