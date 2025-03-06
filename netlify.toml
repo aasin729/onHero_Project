@@ -1,5 +1,5 @@
 [[redirects]]
 from = "/proxy/*"
-  to = "https://openapi.mnd.go.kr" 
+  to = "https://openapi.mnd.go.kr/:splat" 
   status = 200
   force = true
