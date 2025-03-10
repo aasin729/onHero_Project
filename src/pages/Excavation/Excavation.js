@@ -38,9 +38,10 @@ const Excavation = () => {
   const totalsSectionRef = useRef();
   const [isInView, setIsInView] = useState(false);
 
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
-  // 해당변수는 호스트가 localhost에서 클라이언트 서버를 열면 값이 없지만 다른 호스트를 사용시에는 netlify.toml에 설정해둔
-  // proxy값을 할당 받는다.
+const PROXY =
+  window.location.hostname === "localhost"
+    ? ""
+    : "https://openapi.mnd.go.kr"; // Netlify에서 프록시 적용이 안 되면 직접 API URL 사용
 
   const fetchData = async () => {
     try {
